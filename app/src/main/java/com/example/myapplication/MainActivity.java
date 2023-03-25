@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (dr[i].x == x && dr[i].y == y) {
                     for (int i1 = 0; i1 < 2; i1++) {
                         if (dr[i].getPossibleMoves()[i1] != -1) {
+                            id = dr[i].id_draught;
                             board[x + d][dr[i].getPossibleMoves()[i1]] = 3;
                         }
                     }
@@ -51,6 +52,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
             }
             updateboard();
+        }
+
+        public void move(int x1, int y1, Draught[] dr) {
+            for (int i = 0; i < 12; i++) {
+                if (dr[i].id_draught == id) {
+                    dr[i].move(x1, y1);
+                    break;
+                }
+            }
+            clear3();
         }
 
         // Обновление доски.
@@ -65,9 +76,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         b.boardIm[i][j].setImageResource(R.drawable.draught_black);
                     } else if (b.board[i][j] == 3) {
                         b.boardIm[i][j].setImageResource(R.drawable.dot_choice);
-                    } else if (b.board[i][j] == 10) {
+                    } else if (b.board[i][j] == 11) {
                         b.boardIm[i][j].setImageResource(R.drawable.draught_white_king);
-                    } else if (b.board[i][j] == 20) {
+                    } else if (b.board[i][j] == 22) {
                         b.boardIm[i][j].setImageResource(R.drawable.draught_black_king);
                     }
                 }
@@ -94,7 +105,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             int d;
             d = turn == 1 ? 1 : -1;
             if (!is_king) {
-                id = id_draught;
                 if (y + 1 <= 7 && b.board[x + d][y + 1] == 0) {
                     el = y + 1;
                 } else {
@@ -111,8 +121,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return moves;
         }
 
-        public void move(int x, int y) {
-
+        public void move(int x1, int y1) {
+            int king;
+            king = turn == 1 ? 11 : 22;
+            int pos_king;
+            pos_king = turn == 1 ? 7 : 0;
+            b.board[x][y] = 0;
+            x = x1;
+            y = y1;
+            if (x1 == pos_king) {
+                b.board[x1][y1] = king;
+                is_king = true;
+            } else {
+                b.board[x1][y1] = turn;
+            }
+            turn = turn == 1 ? 2 : 1;
+            id = 0;
+            b.updateboard();
         }
     }
 
@@ -225,13 +250,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                if (b.boardIm[i][j].getId() == v.getId() && b.board[i][j] != 0) {
+                if (b.boardIm[i][j].getId() == v.getId() && b.board[i][j] == turn) {
                     if (turn == 1) {
                         b.setMoves(i, j, white);
                     } else {
                         b.setMoves(i, j, black);
                     }
                     break;
+                } else if (b.boardIm[i][j].getId() == v.getId() && b.board[i][j] == 3) {
+                    if (turn == 1) {
+                        b.move(i, j, white);
+                    } else {
+                        b.move(i, j, black);
+                    }
                 }
             }
         }
