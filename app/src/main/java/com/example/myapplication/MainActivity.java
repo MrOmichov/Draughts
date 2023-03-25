@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 
@@ -43,9 +44,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             for (int i = 0; i < 12; i++) {
                 if (dr[i].x == x && dr[i].y == y) {
                     for (int i1 = 0; i1 < 2; i1++) {
-                        if (dr[i].getPossibleMoves()[i1] != -1) {
-                            id = dr[i].id_draught;
-                            board[x + d][dr[i].getPossibleMoves()[i1]] = 3;
+                        if (!dr[i].is_king) {
+                            if (dr[i].getPossibleMoves()[i1] != -1) {
+                                id = dr[i].id_draught;
+                                board[x + d][dr[i].getPossibleMoves()[i1]] = 3;
+                            }
+                        } else {
+                            for (int i2 = 0; i2 < dr[i].getPossibleMovesKing().length; i2++) {
+                                if (dr[i].getPossibleMovesKing()[i2][0] != -1) {
+                                    id = dr[i].id_draught;
+                                    board[dr[i].getPossibleMovesKing()[i2][0]][dr[i].getPossibleMovesKing()[i2][1]] = 3;
+                                }
+                            }
                         }
                     }
                     break;
@@ -66,6 +76,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         // Обновление доски.
         public void updateboard() {
+            for (int i = 0; i < 8; i++) {
+                for (int j = 0; j < 8; j++) {
+                    System.out.print(" " + b.board[i][j] + " ");
+                }
+                System.out.println();
+            }
+            System.out.println();
+            System.out.println();
             for (int i = 0; i < 8; i++) {
                 for (int j = 0; j < 8; j++) {
                     if (b.board[i][j] == 0) {
@@ -104,24 +122,147 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             int el;
             int d;
             d = turn == 1 ? 1 : -1;
-            if (!is_king) {
-                if (y + 1 <= 7 && b.board[x + d][y + 1] == 0) {
-                    el = y + 1;
-                } else {
-                    el = -1;
-                }
-                moves[0] = el;
-                if (y - 1 >= 0 && b.board[x + d][y - 1] == 0) {
-                    el = y - 1;
-                } else {
-                    el = -1;
-                }
-                moves[1] = el;
+            if (y + 1 <= 7 && b.board[x + d][y + 1] == 0) {
+                el = y + 1;
+            } else {
+                el = -1;
             }
+            moves[0] = el;
+            if (y - 1 >= 0 && b.board[x + d][y - 1] == 0) {
+                el = y - 1;
+            } else {
+                el = -1;
+            }
+            moves[1] = el;
             return moves;
         }
 
+        public int[][] getPossibleMovesKing () {
+            /*
+            int[] el = new int[2];
+            for (int i = 0; i < 13; i++) {
+                for (int j = 0; j < 2; j++) {
+                    moves[i][j] = -1;
+                }
+            }*/
+            int[] el = new int[2];
+            int[][] moves_ne = new int[0][2];
+            for (int i = 1; i < 8; i++) {
+                if ((x + i > 7 || y + i > 7) || b.board[x + i][y + i] != 0) {
+                    break;
+                }
+                el[0] = x + i;
+                el[1] = y + i;
+                moves_ne = addElement(moves_ne, el);
+            }
+
+            int[][] moves_se = new int[0][2];
+            for (int i = 1; i < 8; i++) {
+                if ((x - i < 0 || y + i > 7) || b.board[x - i][y + i] != 0) {
+                    break;
+                }
+                el[0] = x - i;
+                el[1] = y + i;
+                moves_se = addElement(moves_se, el);
+            }
+
+            int[][] moves_sw = new int[0][2];
+            for (int i = 1; i < 8; i++) {
+                if ((x - i < 0 || y - i < 0) || b.board[x - i][y - i] != 0) {
+                    break;
+                }
+                el[0] = x - i;
+                el[1] = y - i;
+                moves_sw = addElement(moves_sw, el);
+            }
+
+            int[][] moves_nw = new int[0][2];
+            for (int i = 1; i < 8; i++) {
+                if ((x + i > 7 || y - i < 0) || b.board[x + i][y - i] != 0) {
+                    break;
+                }
+                el[0] = x + i;
+                el[1] = y - i;
+                moves_nw = addElement(moves_nw, el);
+            }
+
+            int[][] moves;
+            moves = moves_ne;
+            moves = join(moves, moves_se);
+            moves = join(moves, moves_sw);
+            moves = join(moves, moves_nw);
+
+            return moves;
+            /*
+            int[][] moves = new int[13][2];
+            for (int i = 0; i < 13; i++ ) {
+                moves[i][0] = -1;
+                moves[i][1] = -1;
+            }
+
+            for (int i = 1; i < 8; i++) {
+                if ((x + i > 7 || y + i > 7) || b.board[x + i][y + i] != 0) {
+                    break;
+                }
+                for (int j = 1; j < 8; j++) {
+                    if (moves[j][0] == -1) {
+                        moves[j][0] = x + i;
+                        moves[j][1] = y + i;
+                        break;
+                    }
+                }
+            }
+
+            for (int i = 1; i < 8; i++) {
+                if ((x - i < 0 || y + i > 7) || b.board[x - i][y + i] != 0) {
+                    break;
+                }
+                for (int j = 1; j < 8; j++) {
+                    if (moves[j][0] == -1) {
+                        moves[j][0] = x - i;
+                        moves[j][1] = y + i;
+                        break;
+                    }
+                }
+            }
+
+            for (int i = 1; i < 8; i++) {
+                if ((x - i < 0 || y - i < 0) || b.board[x - i][y - i] != 0) {
+                    break;
+                }
+                for (int j = 1; j < 8; j++) {
+                    if (moves[j][0] == -1) {
+                        moves[j][0] = x - i;
+                        moves[j][1] = y - i;
+                        break;
+                    }
+                }
+            }
+
+            for (int i = 1; i < 8; i++) {
+                if ((x + i > 7 || y - i < 0) || b.board[x + i][y - i] != 0) {
+                    break;
+                }
+                for (int j = 1; j < 8; j++) {
+                    if (moves[j][0] == -1) {
+                        moves[j][0] = x + i;
+                        moves[j][1] = y - i;
+                        break;
+                    }
+                }
+            }
+            return moves;
+            */
+        }
+
+
         public void move(int x1, int y1) {
+            int dr;
+            if (turn == 1) {
+                dr = is_king ? 11 : 1;
+            } else {
+                dr = is_king ? 22 : 2;
+            }
             int king;
             king = turn == 1 ? 11 : 22;
             int pos_king;
@@ -133,7 +274,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 b.board[x1][y1] = king;
                 is_king = true;
             } else {
-                b.board[x1][y1] = turn;
+                b.board[x1][y1] = dr;
             }
             turn = turn == 1 ? 2 : 1;
             id = 0;
@@ -248,9 +389,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
+        int k;
+        k = turn == 1 ? 11 : 22;
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                if (b.boardIm[i][j].getId() == v.getId() && b.board[i][j] == turn) {
+                if (b.boardIm[i][j].getId() == v.getId() && (b.board[i][j] == turn || b.board[i][j] == k)) {
                     if (turn == 1) {
                         b.setMoves(i, j, white);
                     } else {
@@ -287,4 +430,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             array[myArray.length] = element;
             return array;
         }
+
+    public static int[][] join(int[][] a, int[][] b)
+    {
+        int[][] result = Arrays.copyOf(a, a.length + b.length);
+        System.arraycopy(b, 0, result, a.length, b.length);
+        return result;
+    }
 }
