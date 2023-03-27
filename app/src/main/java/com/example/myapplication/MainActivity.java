@@ -30,14 +30,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                          {2, 0, 2, 0, 2, 0, 2, 0},
                          {0, 2, 0, 2, 0, 2, 0, 2}};
     */
-        int[][] board = {{0, 0, 1, 0, 0, 0, 0, 0},
-                         {0, 2, 0, 2, 0, 0, 0, 0},
+        int[][] board = {{0, 0, 22, 0, 0, 0, 0, 0},
                          {0, 0, 0, 0, 0, 0, 0, 0},
                          {0, 0, 0, 0, 0, 0, 0, 0},
+                         {0, 0, 0, 0, 0, 2, 0, 0},
                          {0, 0, 0, 0, 0, 0, 0, 0},
+                         {0, 0, 0, 0, 0, 2, 0, 0},
                          {0, 0, 0, 0, 0, 0, 0, 0},
-                         {0, 0, 0, 0, 0, 0, 0, 0},
-                         {0, 0, 0, 0, 0, 0, 0, 0}}; // Виртуальное поле.
+                         {0, 11, 0, 0, 0, 0, 0, 0}}; // Виртуальное поле.
 
         ImageButton[][] boardIm = new ImageButton[8][8];
 
@@ -522,7 +522,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     el[1] = y - 2;
                     fights = addElement(fights, el);
                 }
-            } else {
+            }
+            else {
                 for (int i = 1; i < 8; i++) {
                     if ((x + i + 1 <= 7 && y + i + 1 <= 7) && (b.board[x + i][y + i] == opponent || b.board[x + i][y + i] == k) && (b.board[x + i + 1][y + i + 1] == 0 || b.board[x + i + 1][y + i + 1] == 3)) {
                         el[0] = x + i;
@@ -635,8 +636,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         opponent[j].y = -1;
                     }
                 }
-            }
-            if (x1 < x && y1 > y) {
+            } else if (x1 < x && y1 > y) {
                 for (int j = 0; j < 12; j++) {
                     if(opponent[j].x < x && opponent[j].x > x1 && opponent[j].y > y && opponent[j].y < y1) {
                         b.board[opponent[j].x][opponent[j].y] = 0;
@@ -644,8 +644,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         opponent[j].y = -1;
                     }
                 }
-            }
-            if (x1 < x && y1 < y) {
+            } else if (x1 < x && y1 < y) {
                 for (int j = 0; j < 12; j++) {
                     if(opponent[j].x < x && opponent[j].x > x1 && opponent[j].y < y && opponent[j].y > y1) {
                         b.board[opponent[j].x][opponent[j].y] = 0;
@@ -653,8 +652,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         opponent[j].y = -1;
                     }
                 }
-            }
-            if (x1 > x && y1 < y) {
+            } else if (x1 > x && y1 < y) {
                 for (int j = 0; j < 12; j++) {
                     if(opponent[j].x > x && opponent[j].x < x1 && opponent[j].y < y && opponent[j].y > y1) {
                         b.board[opponent[j].x][opponent[j].y] = 0;
