@@ -30,11 +30,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                          {2, 0, 2, 0, 2, 0, 2, 0},
                          {0, 2, 0, 2, 0, 2, 0, 2}};
     */
-        int[][] board = {{0, 0, 22, 0, 0, 0, 0, 0},
+        int[][] board = {{0, 0, 1, 0, 0, 0, 0, 0},
+                         {0, 2, 0, 2, 0, 0, 0, 0},
                          {0, 0, 0, 0, 0, 0, 0, 0},
                          {0, 0, 0, 0, 0, 0, 0, 0},
                          {0, 0, 0, 0, 0, 0, 0, 0},
-                         {0, 0, 0, 0, 11, 0, 0, 0},
                          {0, 0, 0, 0, 0, 0, 0, 0},
                          {0, 0, 0, 0, 0, 0, 0, 0},
                          {0, 0, 0, 0, 0, 0, 0, 0}}; // Виртуальное поле.
@@ -119,13 +119,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     Log.d("f", "setFights board");
                     id = dr[i].id_draught;
                     if (!dr[i].is_king) {
+                        /*
                         for (int j = 0; j < dr[i].getPossibleFights().length; j++) {
                             String s = Integer.toString(dr[i].getPossibleFights()[j][0]);
                             Log.d("f", s);
                             s = Integer.toString(dr[i].getPossibleFights()[j][1]);
                             Log.d("f", s);
                             b.board[dr[i].getPossibleFights()[j][0]][dr[i].getPossibleFights()[j][1]] = 3;
-                        }
+                        }*/
+                        int k;
+                        k = turn == 1 ? 22 : 11;
+                        int opponent;
+                        opponent = turn == 1 ? 2 : 1;
+                            if ((dr[i].x + 2 <= 7 && dr[i].y + 2 <= 7) && (b.board[dr[i].x + 1][dr[i].y + 1] == opponent || b.board[dr[i].x + 1][dr[i].y + 1] == k) && b.board[dr[i].x + 2][dr[i].y + 2] == 0) {
+                                b.board[dr[i].x + 2][dr[i].y + 2] = 3;
+                            }
+                            if ((dr[i].x - 2 >= 0 && dr[i].y + 2 <= 7) && (b.board[dr[i].x - 1][dr[i].y + 1] == opponent || b.board[dr[i].x - 1][dr[i].y + 1] == k) && b.board[dr[i].x - 2][dr[i].y + 2] == 0) {
+                                b.board[dr[i].x - 2][dr[i].y + 2] = 3;
+                            }
+                            if ((dr[i].x - 2 >= 0 && dr[i].y - 2 >= 0) && (b.board[dr[i].x - 1][dr[i].y - 1] == opponent || b.board[dr[i].x - 1][dr[i].y - 1] == k) && b.board[dr[i].x - 2][dr[i].y - 2] == 0) {
+                                b.board[dr[i].x - 2][dr[i].y - 2] = 3;
+                            }
+                            if ((dr[i].x + 2 <= 7 && dr[i].y - 2 >= 0) && (b.board[dr[i].x + 1][dr[i].y - 1] == opponent || b.board[dr[i].x + 1][dr[i].y - 1] == k) && b.board[dr[i].x + 2][dr[i].y - 2] == 0) {
+                                b.board[dr[i].x + 2][dr[i].y - 2] = 3;
+                            }
+
                     } else {
                         for (int j = 0; j < dr[i].getPossibleFights().length; j++) {
                             String s = Integer.toString(dr[i].getPossibleFights()[j][0]) + Integer.toString(dr[i].getPossibleFights()[j][1]);
