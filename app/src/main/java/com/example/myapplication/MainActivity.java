@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     int is_fight; // Переменная, указывающая пуст или полон массив.
 
     public class Board {
-        /*
+
         int[][] board = {{1, 0, 1, 0, 1, 0, 1, 0},
                          {0, 1, 0, 1, 0, 1, 0, 1},
                          {1, 0, 1, 0, 1, 0, 1, 0},
@@ -29,7 +29,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                          {0, 2, 0, 2, 0, 2, 0, 2},
                          {2, 0, 2, 0, 2, 0, 2, 0},
                          {0, 2, 0, 2, 0, 2, 0, 2}};
-    */
+
+        /*
         int[][] board = {{0, 0, 22, 0, 0, 0, 0, 0},
                          {0, 0, 0, 0, 0, 0, 0, 0},
                          {0, 0, 0, 0, 0, 0, 0, 0},
@@ -38,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                          {0, 0, 0, 0, 0, 2, 0, 0},
                          {0, 0, 0, 0, 0, 0, 0, 0},
                          {0, 11, 0, 0, 0, 0, 0, 0}}; // Виртуальное поле.
-
+*/
         ImageButton[][] boardIm = new ImageButton[8][8];
 
         public void setMoves(int x1, int y1, Draught[] dr) {
