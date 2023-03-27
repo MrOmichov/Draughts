@@ -6,4 +6,828 @@
     android:layout_height="match_parent"
     tools:context=".LevelActivity">
 
+    <ImageView
+        android:id="@+id/draughts_board"
+        android:layout_width="385dp"
+        android:layout_height="385dp"
+        android:layout_marginTop="173dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/draughts_board" />
+
+    <LinearLayout
+        android:layout_width="385dp"
+        android:layout_height="385dp"
+        android:layout_marginTop="173dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:id="@+id/line8"
+            android:layout_width="385dp"
+            android:layout_height="48.125dp"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/check81"
+                android:layout_width="48.125dp"
+                android:layout_height="48.125dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:contentDescription="check81"
+                android:scaleType="centerCrop"
+                android:src="@drawable/draught_empty"
+                app:layout_constraintStart_toStartOf="@+id/draughts_board"
+                tools:layout_editor_absoluteY="415dp" />
+
+            <ImageButton
+                android:id="@+id/check82"
+                android:layout_width="48.125dp"
+                android:layout_height="48.125dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:contentDescription="check82"
+                android:scaleType="centerCrop"
+                android:src="@drawable/draught_black"
+                app:layout_constraintStart_toEndOf="@+id/check41"
+                tools:layout_editor_absoluteY="415dp" />
+
+            <ImageButton
+                android:id="@+id/check83"
+                android:layout_width="48.125dp"
+                android:layout_height="48.125dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:contentDescription="check83"
+                android:scaleType="centerCrop"
+                android:src="@drawable/draught_empty"
+                app:layout_constraintStart_toEndOf="@+id/check42"
+                tools:layout_editor_absoluteY="415dp" />
+
+            <ImageButton
+                android:id="@+id/check84"
+                android:layout_width="48.125dp"
+                android:layout_height="48.125dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:contentDescription="check84"
+                android:scaleType="centerCrop"
+                android:src="@drawable/draught_black"
+                app:layout_constraintStart_toStartOf="@+id/draughts_board"
+                tools:layout_editor_absoluteY="415dp" />
+
+            <ImageButton
+                android:id="@+id/check85"
+                android:layout_width="48.125dp"
+                android:layout_height="48.125dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:contentDescription="check85"
+                android:scaleType="centerCrop"
+                android:src="@drawable/draught_empty"
+                app:layout_constraintStart_toEndOf="@+id/check31"
+                tools:layout_editor_absoluteY="415dp" />
+
+            <ImageButton
+                android:id="@+id/check86"
+                android:layout_width="48.125dp"
+                android:layout_height="48.125dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:contentDescription="check86"
+                android:scaleType="centerCrop"
+                android:src="@drawable/draught_black"
+                app:layout_constraintStart_toEndOf="@+id/check32"
+                tools:layout_editor_absoluteY="415dp" />
+
+            <ImageButton
+                android:id="@+id/check87"
+                android:layout_width="48.125dp"
+                android:layout_height="48.125dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:contentDescription="check87"
+                android:scaleType="centerCrop"
+                android:src="@drawable/draught_empty"
+                app:layout_constraintStart_toStartOf="@+id/draughts_board"
+                tools:layout_editor_absoluteY="415dp" />
+
+            <ImageButton
+                android:id="@+id/check88"
+                android:layout_width="48.125dp"
+                android:layout_height="48.125dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:contentDescription="check88"
+                android:scaleType="centerCrop"
+                android:src="@drawable/draught_black"
+                app:layout_constraintStart_toEndOf="@+id/check31"
+                tools:layout_editor_absoluteY="415dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/line7"
+            android:layout_width="385dp"
+            android:layout_height="48.125dp"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/check71"
+                android:layout_width="48.125dp"
+                android:layout_height="48.125dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:contentDescription="check71"
+                android:scaleType="centerCrop"
+                android:src="@drawable/draught_black"
+                app:layout_constraintStart_toStartOf="@+id/draughts_board"
+                tools:layout_editor_absoluteY="415dp" />
+
+            <ImageButton
+                android:id="@+id/check72"
+                android:layout_width="48.125dp"
+                android:layout_height="48.125dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:contentDescription="check72"
+                android:scaleType="centerCrop"
+                android:src="@drawable/draught_empty"
+                tools:layout_editor_absoluteY="415dp" />
+
+            <ImageButton
+                android:id="@+id/check73"
+                android:layout_width="48.125dp"
+                android:layout_height="48.125dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:contentDescription="check73"
+                android:scaleType="centerCrop"
+                android:src="@drawable/draught_black"
+                tools:layout_editor_absoluteY="415dp" />
+
+            <ImageButton
+                android:id="@+id/check74"
+                android:layout_width="48.125dp"
+                android:layout_height="48.125dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:contentDescription="check74"
+                android:scaleType="centerCrop"
+                android:src="@drawable/draught_empty"
+                app:layout_constraintStart_toStartOf="@+id/draughts_board"
+                tools:layout_editor_absoluteY="415dp" />
+
+            <ImageButton
+                android:id="@+id/check75"
+                android:layout_width="48.125dp"
+                android:layout_height="48.125dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:contentDescription="check75"
+                android:scaleType="centerCrop"
+                android:src="@drawable/draught_black"
+                app:layout_constraintStart_toEndOf="@+id/check31"
+                tools:layout_editor_absoluteY="415dp" />
+
+            <ImageButton
+                android:id="@+id/check76"
+                android:layout_width="48.125dp"
+                android:layout_height="48.125dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:contentDescription="check76"
+                android:scaleType="centerCrop"
+                android:src="@drawable/draught_empty"
+                app:layout_constraintStart_toEndOf="@+id/check32"
+                tools:layout_editor_absoluteY="415dp" />
+
+            <ImageButton
+                android:id="@+id/check77"
+                android:layout_width="48.125dp"
+                android:layout_height="48.125dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:contentDescription="check77"
+                android:scaleType="centerCrop"
+                android:src="@drawable/draught_black"
+                app:layout_constraintStart_toStartOf="@+id/draughts_board"
+                tools:layout_editor_absoluteY="415dp" />
+
+            <ImageButton
+                android:id="@+id/check78"
+                android:layout_width="48.125dp"
+                android:layout_height="48.125dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:contentDescription="check78"
+                android:scaleType="centerCrop"
+                android:src="@drawable/draught_empty"
+                app:layout_constraintStart_toEndOf="@+id/check31"
+                tools:layout_editor_absoluteY="415dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/line6"
+            android:layout_width="385dp"
+            android:layout_height="48.125dp"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/check61"
+                android:layout_width="48.125dp"
+                android:layout_height="48.125dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:contentDescription="check61"
+                android:scaleType="centerCrop"
+                android:src="@drawable/draught_empty"
+                app:layout_constraintStart_toStartOf="@+id/draughts_board"
+                tools:layout_editor_absoluteY="415dp" />
+
+            <ImageButton
+                android:id="@+id/check62"
+                android:layout_width="48.125dp"
+                android:layout_height="48.125dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:contentDescription="check62"
+                android:scaleType="centerCrop"
+                android:src="@drawable/draught_black"
+                app:layout_constraintStart_toEndOf="@+id/check41"
+                tools:layout_editor_absoluteY="415dp" />
+
+            <ImageButton
+                android:id="@+id/check63"
+                android:layout_width="48.125dp"
+                android:layout_height="48.125dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:contentDescription="check63"
+                android:scaleType="centerCrop"
+                android:src="@drawable/draught_empty"
+                app:layout_constraintStart_toEndOf="@+id/check42"
+                tools:layout_editor_absoluteY="415dp" />
+
+            <ImageButton
+                android:id="@+id/check64"
+                android:layout_width="48.125dp"
+                android:layout_height="48.125dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:contentDescription="check64"
+                android:scaleType="centerCrop"
+                android:src="@drawable/draught_black"
+                app:layout_constraintStart_toStartOf="@+id/draughts_board"
+                tools:layout_editor_absoluteY="415dp" />
+
+            <ImageButton
+                android:id="@+id/check65"
+                android:layout_width="48.125dp"
+                android:layout_height="48.125dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:contentDescription="check65"
+                android:scaleType="centerCrop"
+                android:src="@drawable/draught_empty"
+                app:layout_constraintStart_toEndOf="@+id/check31"
+                tools:layout_editor_absoluteY="415dp" />
+
+            <ImageButton
+                android:id="@+id/check66"
+                android:layout_width="48.125dp"
+                android:layout_height="48.125dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:contentDescription="check66"
+                android:scaleType="centerCrop"
+                android:src="@drawable/draught_black"
+                app:layout_constraintStart_toEndOf="@+id/check32"
+                tools:layout_editor_absoluteY="415dp" />
+
+            <ImageButton
+                android:id="@+id/check67"
+                android:layout_width="48.125dp"
+                android:layout_height="48.125dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:contentDescription="check67"
+                android:scaleType="centerCrop"
+                android:src="@drawable/draught_empty"
+                app:layout_constraintStart_toStartOf="@+id/draughts_board"
+                tools:layout_editor_absoluteY="415dp" />
+
+            <ImageButton
+                android:id="@+id/check68"
+                android:layout_width="48.125dp"
+                android:layout_height="48.125dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:contentDescription="check68"
+                android:scaleType="centerCrop"
+                android:src="@drawable/draught_black"
+                app:layout_constraintStart_toEndOf="@+id/check31"
+                tools:layout_editor_absoluteY="415dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/line5"
+            android:layout_width="385dp"
+            android:layout_height="48.125dp"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/check51"
+                android:layout_width="48.125dp"
+                android:layout_height="48.125dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:contentDescription="check51"
+                android:scaleType="centerCrop"
+                android:src="@drawable/draught_empty"
+                app:layout_constraintStart_toStartOf="@+id/draughts_board"
+                tools:layout_editor_absoluteY="415dp" />
+
+            <ImageButton
+                android:id="@+id/check52"
+                android:layout_width="48.125dp"
+                android:layout_height="48.125dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:contentDescription="check52"
+                android:scaleType="centerCrop"
+                android:src="@drawable/draught_empty"
+                app:layout_constraintStart_toEndOf="@+id/check41"
+                tools:layout_editor_absoluteY="415dp" />
+
+            <ImageButton
+                android:id="@+id/check53"
+                android:layout_width="48.125dp"
+                android:layout_height="48.125dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:contentDescription="check53"
+                android:scaleType="centerCrop"
+                android:src="@drawable/draught_empty"
+                app:layout_constraintStart_toEndOf="@+id/check42"
+                tools:layout_editor_absoluteY="415dp" />
+
+            <ImageButton
+                android:id="@+id/check54"
+                android:layout_width="48.125dp"
+                android:layout_height="48.125dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:contentDescription="check54"
+                android:scaleType="centerCrop"
+                android:src="@drawable/draught_empty"
+                app:layout_constraintStart_toStartOf="@+id/draughts_board"
+                tools:layout_editor_absoluteY="415dp" />
+
+            <ImageButton
+                android:id="@+id/check55"
+                android:layout_width="48.125dp"
+                android:layout_height="48.125dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:contentDescription="check55"
+                android:scaleType="centerCrop"
+                android:src="@drawable/draught_empty"
+                app:layout_constraintStart_toEndOf="@+id/check31"
+                tools:layout_editor_absoluteY="415dp" />
+
+            <ImageButton
+                android:id="@+id/check56"
+                android:layout_width="48.125dp"
+                android:layout_height="48.125dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:contentDescription="check56"
+                android:scaleType="centerCrop"
+                android:src="@drawable/draught_empty"
+                app:layout_constraintStart_toEndOf="@+id/check32"
+                tools:layout_editor_absoluteY="415dp" />
+
+            <ImageButton
+                android:id="@+id/check57"
+                android:layout_width="48.125dp"
+                android:layout_height="48.125dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:contentDescription="check57"
+                android:scaleType="centerCrop"
+                android:src="@drawable/draught_empty"
+                app:layout_constraintStart_toStartOf="@+id/draughts_board"
+                tools:layout_editor_absoluteY="415dp" />
+
+            <ImageButton
+                android:id="@+id/check58"
+                android:layout_width="48.125dp"
+                android:layout_height="48.125dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:contentDescription="check58"
+                android:scaleType="centerCrop"
+                android:src="@drawable/draught_empty"
+                app:layout_constraintStart_toEndOf="@+id/check31"
+                tools:layout_editor_absoluteY="415dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/line4"
+            android:layout_width="385dp"
+            android:layout_height="48.125dp"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/check41"
+                android:layout_width="48.125dp"
+                android:layout_height="48.125dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:contentDescription="check41"
+                android:scaleType="centerCrop"
+                android:src="@drawable/draught_empty"
+                app:layout_constraintStart_toStartOf="@+id/draughts_board"
+                tools:layout_editor_absoluteY="415dp" />
+
+            <ImageButton
+                android:id="@+id/check42"
+                android:layout_width="48.125dp"
+                android:layout_height="48.125dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:contentDescription="check42"
+                android:scaleType="centerCrop"
+                android:src="@drawable/draught_empty"
+                app:layout_constraintStart_toEndOf="@+id/check41"
+                tools:layout_editor_absoluteY="415dp" />
+
+            <ImageButton
+                android:id="@+id/check43"
+                android:layout_width="48.125dp"
+                android:layout_height="48.125dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:contentDescription="check43"
+                android:scaleType="centerCrop"
+                android:src="@drawable/draught_empty"
+                app:layout_constraintStart_toEndOf="@+id/check42"
+                tools:layout_editor_absoluteY="415dp" />
+
+            <ImageButton
+                android:id="@+id/check44"
+                android:layout_width="48.125dp"
+                android:layout_height="48.125dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:contentDescription="check44"
+                android:scaleType="centerCrop"
+                android:src="@drawable/draught_empty"
+                app:layout_constraintStart_toStartOf="@+id/draughts_board"
+                tools:layout_editor_absoluteY="415dp" />
+
+            <ImageButton
+                android:id="@+id/check45"
+                android:layout_width="48.125dp"
+                android:layout_height="48.125dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:contentDescription="check45"
+                android:scaleType="centerCrop"
+                android:src="@drawable/draught_empty"
+                app:layout_constraintStart_toEndOf="@+id/check31"
+                tools:layout_editor_absoluteY="415dp" />
+
+            <ImageButton
+                android:id="@+id/check46"
+                android:layout_width="48.125dp"
+                android:layout_height="48.125dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:contentDescription="check46"
+                android:scaleType="centerCrop"
+                android:src="@drawable/draught_empty"
+                app:layout_constraintStart_toEndOf="@+id/check32"
+                tools:layout_editor_absoluteY="415dp" />
+
+            <ImageButton
+                android:id="@+id/check47"
+                android:layout_width="48.125dp"
+                android:layout_height="48.125dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:contentDescription="check47"
+                android:scaleType="centerCrop"
+                android:src="@drawable/draught_empty"
+                app:layout_constraintStart_toStartOf="@+id/draughts_board"
+                tools:layout_editor_absoluteY="415dp" />
+
+            <ImageButton
+                android:id="@+id/check48"
+                android:layout_width="48.125dp"
+                android:layout_height="48.125dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:contentDescription="check48"
+                android:scaleType="centerCrop"
+                android:src="@drawable/draught_empty"
+                app:layout_constraintStart_toEndOf="@+id/check31"
+                tools:layout_editor_absoluteY="415dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/line3"
+            android:layout_width="385dp"
+            android:layout_height="48.125dp"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/check31"
+                android:layout_width="48.125dp"
+                android:layout_height="48.125dp"
+                android:background="@android:color/transparent"
+                android:contentDescription="check31"
+                android:scaleType="centerCrop"
+                app:layout_constraintStart_toStartOf="@+id/draughts_board"
+                android:src="@drawable/draught_white"
+                tools:layout_editor_absoluteY="415dp" />
+
+            <ImageButton
+                android:id="@+id/check32"
+                android:layout_width="48.125dp"
+                android:layout_height="48.125dp"
+                android:background="@android:color/transparent"
+                android:contentDescription="check32"
+                android:scaleType="centerCrop"
+                app:layout_constraintStart_toEndOf="@+id/check31"
+                android:src="@drawable/draught_white"
+                tools:layout_editor_absoluteY="415dp" />
+
+            <ImageButton
+                android:id="@+id/check33"
+                android:layout_width="48.125dp"
+                android:layout_height="48.125dp"
+                android:background="@android:color/transparent"
+                android:contentDescription="check33"
+                android:scaleType="centerCrop"
+                app:layout_constraintStart_toEndOf="@+id/check32"
+                android:src="@drawable/draught_white"
+                tools:layout_editor_absoluteY="415dp" />
+
+            <ImageButton
+                android:id="@+id/check34"
+                android:layout_width="48.125dp"
+                android:layout_height="48.125dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:contentDescription="check34"
+                android:scaleType="centerCrop"
+                android:src="@drawable/draught_white"
+                app:layout_constraintStart_toStartOf="@+id/draughts_board"
+                tools:layout_editor_absoluteY="415dp" />
+
+            <ImageButton
+                android:id="@+id/check35"
+                android:layout_width="48.125dp"
+                android:layout_height="48.125dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:contentDescription="check35"
+                android:scaleType="centerCrop"
+                android:src="@drawable/draught_white"
+                app:layout_constraintStart_toEndOf="@+id/check31"
+                tools:layout_editor_absoluteY="415dp" />
+
+            <ImageButton
+                android:id="@+id/check36"
+                android:layout_width="48.125dp"
+                android:layout_height="48.125dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:contentDescription="check36"
+                android:scaleType="centerCrop"
+                android:src="@drawable/draught_white"
+                app:layout_constraintStart_toEndOf="@+id/check32"
+                tools:layout_editor_absoluteY="415dp" />
+
+            <ImageButton
+                android:id="@+id/check37"
+                android:layout_width="48.125dp"
+                android:layout_height="48.125dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:contentDescription="check37"
+                android:scaleType="centerCrop"
+                android:src="@drawable/draught_white"
+                app:layout_constraintStart_toStartOf="@+id/draughts_board"
+                tools:layout_editor_absoluteY="415dp" />
+
+            <ImageButton
+                android:id="@+id/check38"
+                android:layout_width="48.125dp"
+                android:layout_height="48.125dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:contentDescription="check38"
+                android:scaleType="centerCrop"
+                android:src="@drawable/draught_white"
+                app:layout_constraintStart_toEndOf="@+id/check31"
+                tools:layout_editor_absoluteY="415dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/line2"
+            android:layout_width="385dp"
+            android:layout_height="48.125dp"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/check21"
+                android:layout_width="48.125dp"
+                android:layout_height="48.125dp"
+                android:background="@android:color/transparent"
+                android:contentDescription="check21"
+                android:scaleType="centerCrop"
+                app:layout_constraintStart_toStartOf="@+id/draughts_board"
+                android:src="@drawable/draught_white"
+                tools:layout_editor_absoluteY="463dp" />
+
+            <ImageButton
+                android:id="@+id/check22"
+                android:layout_width="48.125dp"
+                android:layout_height="48.125dp"
+                android:background="@android:color/transparent"
+                android:contentDescription="check22"
+                android:scaleType="centerCrop"
+                app:layout_constraintStart_toEndOf="@+id/check21"
+                android:src="@drawable/draught_white"
+                tools:layout_editor_absoluteY="463dp" />
+
+            <ImageButton
+                android:id="@+id/check23"
+                android:layout_width="48.125dp"
+                android:layout_height="48.125dp"
+                android:background="@android:color/transparent"
+                android:contentDescription="check23"
+                android:scaleType="centerCrop"
+                app:layout_constraintStart_toEndOf="@+id/check22"
+                android:src="@drawable/draught_white"
+                tools:layout_editor_absoluteY="463dp" />
+
+            <ImageButton
+                android:id="@+id/check24"
+                android:layout_width="48.125dp"
+                android:layout_height="48.125dp"
+                android:background="@android:color/transparent"
+                android:contentDescription="check24"
+                android:scaleType="centerCrop"
+                app:layout_constraintStart_toEndOf="@+id/check23"
+                android:src="@drawable/draught_white"
+                tools:layout_editor_absoluteY="463dp" />
+
+            <ImageButton
+                android:id="@+id/check25"
+                android:layout_width="48.125dp"
+                android:layout_height="48.125dp"
+                android:background="@android:color/transparent"
+                android:contentDescription="check25"
+                android:scaleType="centerCrop"
+                app:layout_constraintStart_toEndOf="@+id/check24"
+                android:src="@drawable/draught_white"
+                tools:layout_editor_absoluteY="463dp" />
+
+            <ImageButton
+                android:id="@+id/check26"
+                android:layout_width="48.125dp"
+                android:layout_height="48.125dp"
+                android:background="@android:color/transparent"
+                android:contentDescription="check26"
+                android:scaleType="centerCrop"
+                app:layout_constraintStart_toEndOf="@+id/check25"
+                android:src="@drawable/draught_white"
+                tools:layout_editor_absoluteY="463dp" />
+
+            <ImageButton
+                android:id="@+id/check27"
+                android:layout_width="48.125dp"
+                android:layout_height="48.125dp"
+                android:background="@android:color/transparent"
+                android:contentDescription="check27"
+                android:scaleType="centerCrop"
+                app:layout_constraintStart_toEndOf="@+id/check26"
+                android:src="@drawable/draught_white"
+                tools:layout_editor_absoluteY="463dp" />
+
+            <ImageButton
+                android:id="@+id/check28"
+                android:layout_width="48.125dp"
+                android:layout_height="48.125dp"
+                android:background="@android:color/transparent"
+                android:contentDescription="check28"
+                android:scaleType="centerCrop"
+                app:layout_constraintStart_toEndOf="@+id/check27"
+                android:src="@drawable/draught_white"
+                tools:layout_editor_absoluteY="463dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/line1"
+            android:layout_width="385dp"
+            android:layout_height="48.125dp"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/check11"
+                android:layout_width="48.125dp"
+                android:layout_height="48.125dp"
+                android:background="@android:color/transparent"
+                android:contentDescription="check11"
+                android:scaleType="centerCrop"
+                app:layout_constraintStart_toStartOf="@+id/draughts_board"
+                app:layout_constraintTop_toTopOf="parent"
+                android:src="@drawable/draught_white" />
+
+            <ImageButton
+                android:id="@+id/check12"
+                android:layout_width="48.125dp"
+                android:layout_height="48.125dp"
+                android:background="@android:color/transparent"
+                android:contentDescription="check12"
+                android:scaleType="centerCrop"
+                app:layout_constraintStart_toEndOf="@+id/check11"
+                app:layout_constraintTop_toTopOf="parent"
+                android:src="@drawable/draught_white" />
+
+            <ImageButton
+                android:id="@+id/check13"
+                android:layout_width="48.125dp"
+                android:layout_height="48.125dp"
+                android:background="@android:color/transparent"
+                android:contentDescription="check13"
+                android:scaleType="centerCrop"
+                app:layout_constraintStart_toEndOf="@+id/check12"
+                app:layout_constraintTop_toTopOf="parent"
+                android:src="@drawable/draught_white" />
+
+            <ImageButton
+                android:id="@+id/check14"
+                android:layout_width="48.125dp"
+                android:layout_height="48.125dp"
+                android:background="@android:color/transparent"
+                android:contentDescription="check14"
+                android:scaleType="centerCrop"
+                app:layout_constraintStart_toEndOf="@+id/check13"
+                app:layout_constraintTop_toTopOf="parent"
+                android:src="@drawable/draught_white" />
+
+            <ImageButton
+                android:id="@+id/check15"
+                android:layout_width="48.125dp"
+                android:layout_height="48.125dp"
+                android:background="@android:color/transparent"
+                android:contentDescription="check15"
+                android:scaleType="centerCrop"
+                app:layout_constraintStart_toEndOf="@+id/check14"
+                app:layout_constraintTop_toTopOf="parent"
+                android:src="@drawable/draught_white" />
+
+            <ImageButton
+                android:id="@+id/check16"
+                android:layout_width="48.125dp"
+                android:layout_height="48.125dp"
+                android:background="@android:color/transparent"
+                android:contentDescription="check16"
+                android:scaleType="centerCrop"
+                app:layout_constraintStart_toEndOf="@+id/check15"
+                app:layout_constraintTop_toTopOf="parent"
+                android:src="@drawable/draught_white" />
+
+            <ImageButton
+                android:id="@+id/check17"
+                android:layout_width="48.125dp"
+                android:layout_height="48.125dp"
+                android:background="@android:color/transparent"
+                android:contentDescription="check17"
+                android:scaleType="centerCrop"
+                android:src="@drawable/draught_white"
+                app:layout_constraintStart_toEndOf="@+id/check16"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/check18"
+                android:layout_width="48.125dp"
+                android:layout_height="48.125dp"
+                android:background="@android:color/transparent"
+                android:contentDescription="check18"
+                android:scaleType="centerCrop"
+                app:layout_constraintStart_toEndOf="@+id/check17"
+                app:layout_constraintTop_toTopOf="parent"
+                android:src="@drawable/draught_white" />
+        </LinearLayout>
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

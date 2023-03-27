@@ -612,7 +612,7 @@ public class BotActivity extends AppCompatActivity implements View.OnClickListen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_bot);
 
         b.boardIm[0][0] = findViewById(R.id.check11);
         b.boardIm[0][1] = findViewById(R.id.check12);

@@ -30,14 +30,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                          {2, 0, 2, 0, 2, 0, 2, 0},
                          {0, 2, 0, 2, 0, 2, 0, 2}};
     */
-        int[][] board = {{1, 0, 1, 0, 1, 0, 1, 0},
-                {0, 1, 0, 1, 0, 1, 0, 1},
-                {1, 0, 1, 0, 2, 0, 2, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 2, 0, 0, 0},
-                {0, 2, 0, 0, 0, 0, 0, 0},
-                {2, 0, 2, 0, 2, 0, 2, 0},
-                {0, 2, 0, 2, 0, 2, 0, 2}}; // Виртуальное поле.
+        int[][] board = {{0, 0, 22, 0, 0, 0, 0, 0},
+                         {0, 0, 0, 0, 0, 0, 0, 0},
+                         {0, 0, 0, 0, 0, 0, 0, 0},
+                         {0, 0, 0, 0, 0, 0, 0, 0},
+                         {0, 0, 0, 0, 11, 0, 0, 0},
+                         {0, 0, 0, 0, 0, 0, 0, 0},
+                         {0, 0, 0, 0, 0, 0, 0, 0},
+                         {0, 0, 0, 0, 0, 0, 0, 0}}; // Виртуальное поле.
 
         ImageButton[][] boardIm = new ImageButton[8][8];
 
@@ -55,12 +55,54 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 board[x1 + d][dr[i].getPossibleMoves()[i1]] = 3;
                             }
                         } else {
-                            // dr[i].printPossibleMovesKing();
+                            id = dr[i].id_draught;
+                            //dr[i].printPossibleMovesKing();
+                            /*
+                            int[][] moves = dr[i].getPossibleMovesKing();
+
                             for (int i2 = 0; i2 < dr[i].getPossibleMovesKing().length; i2++) {
                                 if (dr[i].getPossibleMovesKing()[i2][0] != -1) {
                                     id = dr[i].id_draught;
                                     board[dr[i].getPossibleMovesKing()[i2][0]][dr[i].getPossibleMovesKing()[i2][1]] = 3;
+                                    String s = Arrays.toString(dr[i].getPossibleMovesKing()[i2]);
+                                    Log.d("f", s);
                                 }
+                            }
+
+                            for (int[] move : moves) {
+                                board[move[0]][move[1]] = 3;
+                                String s = Arrays.toString(move);
+                                Log.d("f", s);
+                            }
+                            */
+
+                            for (int i2 = 1; i2 < 8; i2++) {
+                                if ((dr[i].x + i2 > 7 || dr[i].y + i2 > 7) || b.board[dr[i].x + i2][dr[i].y + i2] != 0) {
+                                    break;
+                                }
+                                b.board[dr[i].x + i2][dr[i].y + i2] = 3;
+                            }
+
+                            for (int i2 = 1; i2 < 8; i2++) {
+                                if ((dr[i].x - i2 < 0 || dr[i].y + i2 > 7) || b.board[dr[i].x - i2][dr[i].y + i2] != 0) {
+                                    break;
+                                }
+                                b.board[dr[i].x - i2][dr[i].y + i2] = 3;
+
+                            }
+
+                            for (int i2 = 1; i2 < 8; i2++) {
+                                if ((dr[i].x - i2 < 0 || dr[i].y - i2 < 0) || b.board[dr[i].x - i2][dr[i].y - i2] != 0) {
+                                    break;
+                                }
+                                b.board[dr[i].x - i2][dr[i].y - i2] = 3;
+                            }
+
+                            for (int i2 = 1; i2 < 8; i2++) {
+                                if ((dr[i].x + i2 > 7 || dr[i].y - i2 < 0) || b.board[dr[i].x + i2][dr[i].y - i2] != 0) {
+                                    break;
+                                }
+                                b.board[dr[i].x + i2][dr[i].y - i2] = 3;
                             }
                         }
                     }
@@ -250,6 +292,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return moves;
         }
 
+        /*
+        public canMove () {
+
+        }*/
+
         public int[][] getPossibleMovesKing () {
             /*
             int[] el = new int[2];
@@ -264,11 +311,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if ((x + i > 7 || y + i > 7) || b.board[x + i][y + i] != 0) {
                     break;
                 }
-                if ((x + i <= 7 || y + i <= 7) || b.board[x + i][y + i] == 0) {
-                    el[0] = x + i;
-                    el[1] = y + i;
-                    moves = addElement(moves, el);
-                }
+                el[0] = x + i;
+                el[1] = y + i;
+                moves = addElement(moves, el);
+
             }
 
             for (int i = 1; i < 8; i++) {
@@ -278,8 +324,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 el[0] = x - i;
                 el[1] = y + i;
                 moves = addElement(moves, el);
-            }
 
+            }
+            for (int[] move : moves) {
+                System.out.println(Arrays.toString(move));
+            }
+            /*
             for (int i = 1; i < 8; i++) {
                 if ((x - i < 0 || y - i < 0) || b.board[x - i][y - i] != 0) {
                     break;
@@ -297,8 +347,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 el[1] = y - i;
                 moves = addElement(moves, el);
             }
-
+            */
             return moves;
+
             /*
             int[][] moves = new int[13][2];
             for (int i = 0; i < 13; i++ ) {
