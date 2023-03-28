@@ -5,7 +5,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
-import com.example.myapplication.Draught;
 
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,10 +18,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     int id_further = 0;
     int id;// Переменная, содержащая id, выбранной шашки.
     int turn = 1; // Очередность хода.
-    int is_fight; // Переменная, указывающая пуст или полон массив.
 
     public class Board {
-
+/*
         int[][] board = {{1, 0, 1, 0, 1, 0, 1, 0},
                          {0, 1, 0, 1, 0, 1, 0, 1},
                          {1, 0, 1, 0, 1, 0, 1, 0},
@@ -30,18 +28,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                          {0, 0, 0, 0, 0, 0, 0, 0},
                          {0, 2, 0, 2, 0, 2, 0, 2},
                          {2, 0, 2, 0, 2, 0, 2, 0},
-                         {0, 2, 0, 2, 0, 2, 0, 2}};
+                         {0, 2, 0, 2, 0, 2, 0, 2}};*/
 
-/*
-        int[][] board = {{0, 0, 0, 0, 0, 0, 0, 0},
+
+        int[][] board = {{1, 0, 0, 0, 0, 0, 0, 0},
                          {0, 0, 0, 0, 0, 0, 0, 0},
                          {0, 0, 0, 0, 0, 0, 0, 0},
-                         {0, 0, 0, 1, 0, 0, 0, 0},
-                         {0, 0, 0, 0, 22, 0, 0, 0},
-                         {0, 0, 0, 0, 0, 1, 0, 0},
                          {0, 0, 0, 0, 0, 0, 0, 0},
-                         {0, 0, 0, 0, 0, 0, 0, 0}}; // Виртуальное поле.
-*/
+                         {0, 0, 0, 0, 0, 0, 0, 0},
+                         {0, 0, 0, 0, 0, 0, 0, 0},
+                         {0, 0, 0, 0, 0, 0, 0, 0},
+                         {0, 0, 0, 0, 0, 0, 0, 2}}; // Виртуальное поле.
+
         ImageButton[][] boardIm = new ImageButton[8][8];
 
         public void setMoves(int x1, int y1, Draught[] dr) {
