@@ -12,7 +12,6 @@ import java.util.Arrays;
 
 public class LevelActivity extends AppCompatActivity implements View.OnClickListener{
 
-
     int idD = 100;
     int id_further = 0;
     int id;// Переменная, содержащая id, выбранной шашки.
