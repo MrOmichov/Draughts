@@ -2,8 +2,6 @@ package com.example.myapplication;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.bluetooth.le.ScanFilter;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,14 +9,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
-
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.Arrays;
 
-public class LevelActivity extends AppCompatActivity implements View.OnClickListener{
+public class LevelActivity extends AppCompatActivity implements View.OnClickListener {
     Bundle arguments;
     int level;
     String s;
@@ -109,14 +102,6 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
                     Log.d("f", "setFights board");
                     id = dr[i].id_draught;
                     if (!dr[i].is_king) {
-                        /*
-                        for (int j = 0; j < dr[i].getPossibleFights().length; j++) {
-                            String s = Integer.toString(dr[i].getPossibleFights()[j][0]);
-                            Log.d("f", s);
-                            s = Integer.toString(dr[i].getPossibleFights()[j][1]);
-                            Log.d("f", s);
-                            b.board[dr[i].getPossibleFights()[j][0]][dr[i].getPossibleFights()[j][1]] = 3;
-                        }*/
                         int k;
                         k = turn == 1 ? 22 : 11;
                         int opponent;
@@ -133,7 +118,6 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
                         if ((dr[i].x + 2 <= 7 && dr[i].y - 2 >= 0) && (b.board[dr[i].x + 1][dr[i].y - 1] == opponent || b.board[dr[i].x + 1][dr[i].y - 1] == k) && b.board[dr[i].x + 2][dr[i].y - 2] == 0) {
                             b.board[dr[i].x + 2][dr[i].y - 2] = 3;
                         }
-
                     } else {
                         id = dr[i].id_draught;
                         int k;
@@ -141,7 +125,6 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
                         int opponent;
                         opponent = turn == 1 ? 2 : 1;
                         int[][] fights = dr[i].getPossibleFights();
-                        Log.d("f", Arrays.toString(fights));
                         if (fights[0][0] != -1) {
                             for (int i2 = 1; i2 < 8; i2++) {
                                 if ((fights[0][0] + i2 > 7 || fights[0][1] + i2 > 7) || b.board[fights[0][0] + i2][fights[0][1] + i2] != 0) {
@@ -156,7 +139,6 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
                                     break;
                                 }
                                 b.board[fights[1][0] - i2][fights[1][1] + i2] = 3;
-
                             }
                         }
                         if (fights[2][0] != -1) {
@@ -219,7 +201,7 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
         public boolean anyFight (Draught[] dr) {
             boolean any_fight = false;
             for (int i = 0; i < 12; i++) {
-                    if (dr[i].canFight()) {
+                    if (dr[i].canFight() && b.board[dr[i].x][dr[i].y] != 0) {
                         s = Integer.toString(dr[i].x) + " " + Integer.toString(dr[i].y);
                         Log.d("f", s);
                         Log.d("f", Integer.toString(b.board[dr[i].x][dr[i].y]));
@@ -462,7 +444,6 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
             b.board[x][y] = 0;
             x = x1;
             y = y1;
-
             if (x1 == pos_king) {
                 b.board[x1][y1] = king;
                 is_king = true;
@@ -483,47 +464,12 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
         }
 
         public boolean canFight () {
-            int dr = turn == 1 ? 1 : 2;
             int k = 0;
-            //s = Integer.toString(turn);
-            //Log.d("f",  "turn: " + s);
-            /*if (x > -100 && y > -100) {
-                s = Integer.toString(b.board[x][y]);
-                Log.d("f",  "board: " + s + " x: " + Integer.toString(x) + " y: " + Integer.toString(y));
-            }*/
             int opponent = 10;
+            int teammate = 10;
+            int kt = 10;
             boolean can_fight = false;
             if (!is_king) {
-                if (x != -100 && y != -100 && b.board[x][y] == dr) {
-                    if (b.board[x][y] == 1 || b.board[x][y] == 11) {
-                        opponent = 2;
-                        k = 22;
-                    } else if (b.board[x][y] == 2 || b.board[x][y] == 22) {
-                        opponent = 1;
-                        k = 11;
-                    }
-                    if ((x + 2 <= 7 && y + 2 <= 7) && (b.board[x + 1][y + 1] == opponent || b.board[x + 1][y + 1] == k) && b.board[x + 1][y + 1] != 10 && (b.board[x + 2][y + 2] == 0 || b.board[x + 2][y + 2] == 3)) {
-                        s = Integer.toString(x) + " " + Integer.toString(y);
-                        Log.d("f", s);
-                        Log.d("f", "aaaaaaaaaaa");
-                        can_fight = true;
-                    }
-                    if ((x - 2 >= 0 && y + 2 <= 7) && (b.board[x - 1][y + 1] == opponent || b.board[x - 1][y + 1] == k) && b.board[x - 1][y + 1] != 10 && (b.board[x - 2][y + 2] == 0 || b.board[x - 2][y + 2] == 3)) {
-                        Log.d("f", "bbbbbbbbbb");
-                        can_fight = true;
-                    }
-                    if ((x - 2 >= 0 && y - 2 >= 0) && (b.board[x - 1][y - 1] == opponent || b.board[x - 1][y - 1] == k) && b.board[x - 1][y - 1] != 10 && (b.board[x - 2][y - 2] == 0 || b.board[x - 2][y - 2] == 3)) {
-                        Log.d("f", "cccccccccc");
-                        can_fight = true;
-                    }
-                    if ((x + 2 <= 7 && y - 2 >= 0) && (b.board[x + 1][y - 1] == opponent || b.board[x + 1][y - 1] == k) && b.board[x + 1][y - 1] != 10 && (b.board[x + 2][y - 2] == 0 || b.board[x + 2][y - 2] == 3)) {
-                        s = Integer.toString(x) + " " + Integer.toString(y);
-                        Log.d("f", s);
-                        Log.d("f", "ddddddddddddd");
-                        can_fight = true;
-                    }
-                }
-            } else {
                 if (x != -100 && y != -100) {
                     if (b.board[x][y] == 1 || b.board[x][y] == 11) {
                         opponent = 2;
@@ -532,9 +478,37 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
                         opponent = 1;
                         k = 11;
                     }
+                    if ((x + 2 <= 7 && y + 2 <= 7) && (b.board[x + 1][y + 1] == opponent || b.board[x + 1][y + 1] == k) && b.board[x + 1][y + 1] != 10 && (b.board[x + 2][y + 2] == 0 || b.board[x + 2][y + 2] == 3)) {
+                        s = Arrays.toString(b.board[3]);
+                        Log.d("f", s);
+                        can_fight = true;
+                    }
+                    if ((x - 2 >= 0 && y + 2 <= 7) && (b.board[x - 1][y + 1] == opponent || b.board[x - 1][y + 1] == k) && b.board[x - 1][y + 1] != 10 && (b.board[x - 2][y + 2] == 0 || b.board[x - 2][y + 2] == 3)) {
+                        can_fight = true;
+                    }
+                    if ((x - 2 >= 0 && y - 2 >= 0) && (b.board[x - 1][y - 1] == opponent || b.board[x - 1][y - 1] == k) && b.board[x - 1][y - 1] != 10 && (b.board[x - 2][y - 2] == 0 || b.board[x - 2][y - 2] == 3)) {
+                        can_fight = true;
+                    }
+                    if ((x + 2 <= 7 && y - 2 >= 0) && (b.board[x + 1][y - 1] == opponent || b.board[x + 1][y - 1] == k) && b.board[x + 1][y - 1] != 10 && (b.board[x + 2][y - 2] == 0 || b.board[x + 2][y - 2] == 3)) {
+                        can_fight = true;
+                    }
+                }
+            } else {
+                if (x != -100 && y != -100) {
+                    if (b.board[x][y] == 1 || b.board[x][y] == 11) {
+                        teammate = 1;
+                        kt = 11;
+                        opponent = 2;
+                        k = 22;
+                    } else if (b.board[x][y] == 2 || b.board[x][y] == 22) {
+                        teammate = 2;
+                        kt = 22;
+                        opponent = 1;
+                        k = 11;
+                    }
                     for (int i = 1; i < 8; i++) {
                         if (x + i + 1 <= 7 && y + i + 1 <= 7) {
-                            if ((b.board[x + i + 1][y + i + 1] == opponent && b.board[x + i][y + i] == opponent) || (b.board[x + i + 1][y + i + 1] == k && b.board[x + i][y + i] == k)) {
+                            if ((b.board[x + i + 1][y + i + 1] == opponent || b.board[x + i + 1][y + i + 1] == k || b.board[x + i + 1][y + i + 1] == kt || b.board[x + i + 1][y + i + 1] == teammate) && (b.board[x + i][y + i] == opponent || b.board[x + i][y + i] == k || b.board[x + i][y + i] == kt || b.board[x + i][y + i] == teammate)) {
                                 Log.d("f", "aaaaaaa");
                                 break;
                             }
@@ -558,7 +532,7 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
                             }
                         }
                         if (x - i - 1 >= 0 && y + i + 1 <= 7) {
-                            if ((b.board[x - i - 1][y + i + 1] == opponent && b.board[x - i][y + i] == opponent) || (b.board[x - i - 1][y + i + 1] == k && b.board[x - i][y + i] == k)) {
+                            if ((b.board[x - i - 1][y + i + 1] == opponent || b.board[x - i - 1][y + i + 1] == k || b.board[x - i - 1][y + i + 1] == kt || b.board[x - i - 1][y + i + 1] == teammate) && (b.board[x - i][y + i] == opponent || b.board[x - i][y + i] == k || b.board[x - i][y + i] == kt || b.board[x - i][y + i] == teammate)) {
                                 break;
                             }
                         }
@@ -574,7 +548,7 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
                             }
                         }
                         if (x - i - 1 >= 0 && y - i - 1 >= 0) {
-                            if ((b.board[x - i - 1][y - i - 1] == opponent && b.board[x - i][y - i] == opponent) || (b.board[x - i - 1][y - i - 1] == k && b.board[x - i][y - i] == k)) {
+                            if ((b.board[x - i - 1][y - i - 1] == opponent || b.board[x - i - 1][y - i - 1] == k || b.board[x - i - 1][y - i - 1] == kt || b.board[x - i - 1][y - i - 1] == teammate) && (b.board[x - i][y - i] == opponent || b.board[x - i][y - i] == k || b.board[x - i][y - i] == kt || b.board[x - i][y - i] == teammate)) {
                                 Log.d("f", "aaaaaaabbbbbbbb");
                                 break;
                             }
@@ -591,7 +565,7 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
                             }
                         }
                         if (x + i + 1 <= 7 && y - i - 1 >= 0) {
-                            if ((b.board[x + i + 1][y - i - 1] == opponent && b.board[x + i][y - i] == opponent) || (b.board[x + i + 1][y - i - 1] == k && b.board[x + i][y - i] == k)) {
+                            if ((b.board[x + i + 1][y - i - 1] == opponent || b.board[x + i + 1][y - i - 1] == k || b.board[x + i + 1][y - i - 1] == kt || b.board[x + i + 1][y - i - 1] == teammate) && (b.board[x + i][y - i] == opponent || b.board[x + i][y - i] == k || b.board[x + i][y - i] == kt || b.board[x + i][y - i] == teammate)) {
                                 break;
                             }
                         }
@@ -608,11 +582,35 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
         public int[][] getPossibleFights() {
             Log.d("f", "getPossibleFights draught");
             int k;
+            int teammate = 0;
+            int kt = 0;
             k = turn == 1 ? 22 : 11;
             int opponent;
             opponent = turn == 1 ? 2 : 1;
+            if (b.board[x][y] == 1 || b.board[x][y] == 11) {
+                teammate = 1;
+                kt = 11;
+                opponent = 2;
+                k = 22;
+            } else if (b.board[x][y] == 2 || b.board[x][y] == 22) {
+                teammate = 2;
+                kt = 22;
+                opponent = 1;
+                k = 11;
+            }
             int[][] fights = {{-1, -1}, {-1, -1}, {-1, -1}, {-1, -1}};
             for (int i = 1; i < 8; i++) {
+                if (x + i + 1 <= 7 && y + i + 1 <= 7) {
+                    if ((b.board[x + i + 1][y + i + 1] == opponent || b.board[x + i + 1][y + i + 1] == k || b.board[x + i + 1][y + i + 1] == kt || b.board[x + i + 1][y + i + 1] == teammate) && (b.board[x + i][y + i] == opponent || b.board[x + i][y + i] == k || b.board[x + i][y + i] == kt || b.board[x + i][y + i] == teammate)) {
+                        Log.d("f", "aaaaaaa");
+                        break;
+                    }
+                }
+                if (x + i <= 7 && y + i <= 7) {
+                    if (b.board[x + i][y + i] == 10) {
+                        break;
+                    }
+                }
                 if ((x + i + 1 <= 7 && y + i + 1 <= 7) && (b.board[x + i][y + i] == opponent || b.board[x + i][y + i] == k) && (b.board[x + i + 1][y + i + 1] == 0 || b.board[x + i + 1][y + i + 1] == 3)) {
                     fights[0][0] = x + i;
                     fights[0][1] = y + i;
@@ -620,6 +618,17 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
                 }
             }
             for (int i = 1; i < 8; i++) {
+                if (x - i >= 0 && y + i <= 7) {
+                    if (b.board[x - i][y + i] == 10) {
+                        Log.d("f", "aaaaaaab");
+                        break;
+                    }
+                }
+                if (x - i - 1 >= 0 && y + i + 1 <= 7) {
+                    if ((b.board[x - i - 1][y + i + 1] == opponent || b.board[x - i - 1][y + i + 1] == k || b.board[x - i - 1][y + i + 1] == kt || b.board[x - i - 1][y + i + 1] == teammate) && (b.board[x - i][y + i] == opponent || b.board[x - i][y + i] == k || b.board[x - i][y + i] == kt || b.board[x - i][y + i] == teammate)) {
+                        break;
+                    }
+                }
                 if ((x - i - 1 >= 0 && y + i + 1 <= 7) && (b.board[x - i][y + i] == opponent || b.board[x - i][y + i] == k) && (b.board[x - i - 1][y + i + 1] == 0 || b.board[x - i - 1][y + i + 1] == 3)) {
                     fights[1][0] = x - i;
                     fights[1][1] = y + i;
@@ -627,6 +636,17 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
                 }
             }
             for (int i = 1; i < 8; i++) {
+                if (x - i >= 0 && y - i >= 0) {
+                    if (b.board[x - i][y - i] == 10) {
+                        break;
+                    }
+                }
+                if (x - i - 1 >= 0 && y - i - 1 >= 0) {
+                    if ((b.board[x - i - 1][y - i - 1] == opponent || b.board[x - i - 1][y - i - 1] == k || b.board[x - i - 1][y - i - 1] == kt || b.board[x - i - 1][y - i - 1] == teammate) && (b.board[x - i][y - i] == opponent || b.board[x - i][y - i] == k || b.board[x - i][y - i] == kt || b.board[x - i][y - i] == teammate)) {
+                        Log.d("f", "aaaaaaabbbbbbbb");
+                        break;
+                    }
+                }
                 if ((x - i - 1 >= 0 && y - i - 1 >= 0) && (b.board[x - i][y - i] == opponent || b.board[x - i][y - i] == k) && (b.board[x - i - 1][y - i - 1] == 0 || b.board[x - i - 1][y - i - 1] == 3)) {
                     fights[2][0] = x - i;
                     fights[2][1] = y - i;
@@ -634,6 +654,16 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
                 }
             }
             for (int i = 1; i < 8; i++) {
+                if (x + i <= 7 && y - i >= 0) {
+                    if (b.board[x + i][y - i] == 10) {
+                        break;
+                    }
+                }
+                if (x + i + 1 <= 7 && y - i - 1 >= 0) {
+                    if ((b.board[x + i + 1][y - i - 1] == opponent || b.board[x + i + 1][y - i - 1] == k || b.board[x + i + 1][y - i - 1] == kt || b.board[x + i + 1][y - i - 1] == teammate) && (b.board[x + i][y - i] == opponent || b.board[x + i][y - i] == k || b.board[x + i][y - i] == kt || b.board[x + i][y - i] == teammate)) {
+                        break;
+                    }
+                }
                 if ((x + i + 1 <= 7 && y - i - 1 >= 0) && (b.board[x + i][y - i] == opponent || b.board[x + i][y - i] == k) && (b.board[x + i + 1][y - i - 1] == 0 || b.board[x + i + 1][y - i - 1] == 3)) {
                     fights[3][0] = x + i;
                     fights[3][1] = y - i;
@@ -872,6 +902,21 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
                 b.board[4][6] = 2;
                 b.board[2][6] = 2;
                 break;
+            case 4:
+                b.board[7][1] = 11;
+                b.board[5][3] = 2;
+                b.board[3][3] = 2;
+                b.board[3][5] = 2;
+                b.board[2][6] = 2;
+                break;
+            case 5:
+                b.board[0][2] = 1;
+                b.board[1][3] = 1;
+                b.board[6][0] = 2;
+                b.board[3][1] = 2;
+                b.board[3][5] = 2;
+                b.board[5][5] = 2;
+                break;
         }
 
 
@@ -912,10 +957,10 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
-    private void showInfoAlert (int level) {
+    private void showInfoAlert (int lvl) {
         AlertDialog.Builder builder = new AlertDialog.Builder(LevelActivity.this);
         String text = "";
-        switch (level) {
+        switch (lvl) {
             case 1:
                 text = "Обычная шашка передвигается вперёд на одну клетку по диагонали. Доберитесь до противоположного края доски, используя эту информацию.";
                 break;
@@ -926,22 +971,36 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
                 text = "Взятие обязательно. Побитые шашки и дамки снимаются только после завершения хода.\n" +
                         "Простая шашка, находящаяся рядом с шашкой соперника, за которой имеется свободное поле, переносится через эту шашку на это свободное поле. Если есть возможность продолжить взятие других шашек соперника, то это взятие продолжается, пока бьющая шашка не достигнет положения, из которого бой невозможен. Взятие простой шашкой производится как вперёд, так и назад.";
                 break;
+            case 4:
+                text = "Дамка бьёт по диагонали, как вперёд, так и назад, и становится на любое свободное поле после побитой шашки. Вперёд!";
+                break;
+            case 5:
+                text = "В данной позиции всё может показаться безнадёжным. Но не стоит отчаиваться, просто нужно заметить \"решётчатость\" построения чёрных и воспользоваться этим. Дайте чёрным взять вашу шашку";
+                break;
+            case 0:
+                text = "И вы прорываетесь в дамки!!!";
+                break;
         }
-            builder.setTitle("Задание")
-                    .setMessage(text)
-                    .setPositiveButton("Поехали", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            dialogInterface.cancel();
-                        }
-                    })
-                    .setNegativeButton("Назад", new DialogInterface.OnClickListener() {
+            builder.setTitle("Задание" + " " + Integer.toString(level))
+                    .setMessage(text);
+                    if (level != 0) {
+                        builder.setPositiveButton("Поехали", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.cancel();
+                            }
+                        });
+                    }
+        builder.setNegativeButton("Назад", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             Intent intent = new Intent(LevelActivity.this, ExActivity.class);
                             startActivity(intent);
                         }
                     });
+        if (level == 0) {
+            builder.setTitle("Конец");
+        }
 
         AlertDialog dialog = builder.create();
         dialog.show();
@@ -991,6 +1050,7 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
                 }
             }
         }
+        virtualOnClick();
         result();
     }
 
@@ -1006,7 +1066,6 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
                             b.updateboard();
                             level = 2;
                             showInfoAlert(level);
-
                         }
                     }
                 }
@@ -1037,10 +1096,57 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
                     toast.show();
                     step += 1;
                 } else if (step == 4) {
-                    Log.d("f", "123");
+                    clearAll();
+                    b.board[7][1] = 11;
+                    b.board[5][3] = 2;
+                    b.board[3][3] = 2;
+                    b.board[3][5] = 2;
+                    b.board[2][6] = 2;
+                    b.changeBoard();
+                    b.updateboard();
+                    turn = 1;
+                    level = 4;
+                    step = 0;
+                    showInfoAlert(level);
                 }
-
                 break;
+            case 4:
+                int bl = 0;
+                for (int i = 0; i < 8; i++) {
+                    for (int j = 0; j < 8; j++) {
+                        if (b.board[i][j] == 2) {
+                            bl = bl + 1;
+                        }
+                    }
+                }
+                if (bl == 2) {
+                    clearAll();
+                    b.board[0][2] = 1;
+                    b.board[1][3] = 1;
+                    b.board[6][0] = 2;
+                    b.board[3][1] = 2;
+                    b.board[3][5] = 2;
+                    b.board[5][5] = 2;
+                    turn = 1;
+                    level = 5;
+                    b.changeBoard();
+                    b.updateboard();
+                    showInfoAlert(level);
+                }
+                break;
+            case 5:
+                bl = 0;
+                for (int i = 0; i < 8; i++) {
+                    for (int j = 0; j < 8; j++) {
+                        if (b.board[i][j] == 2) {
+                            bl = bl + 1;
+                        }
+                    }
+                }
+                if (bl == 1) {
+                    level = 0;
+                    showInfoAlert(level);
+                }
         }
     }
 
@@ -1065,6 +1171,32 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
             }
         }
         b.updateboard();
+    }
+
+    public void clearAll () {
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                b.board[i][j] = 0;
+            }
+        }
+        b.updateboard();
+    }
+
+    public void virtualOnClick() {
+        if (turn == 2) {
+            for (int i = 0; i < 12; i++) {
+                if (black[i].canFight()) {
+                    b.setFights(black[i].x, black[i].y, black);
+                    for (int i1 = 0; i1 < 8; i1++) {
+                        for (int j1 = 0; j1 < 8; j1++) {
+                            if (b.board[i1][j1] == 3) {
+                                b.fight(i1, j1, black);
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
     // Добавление в массив элемента.
