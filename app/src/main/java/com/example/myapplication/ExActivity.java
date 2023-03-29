@@ -26,8 +26,7 @@ public class ExActivity extends AppCompatActivity {
 
     public void StartLevel(View v) {
         Intent intent = new Intent(this, LevelActivity.class);
-        String s = ((Button) v).getText().toString();
-        intent.putExtra("level", s);
+        intent.putExtra("level", ((Button) v).getText());
         startActivity(intent);
     }
 }

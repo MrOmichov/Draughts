@@ -3,6 +3,7 @@ package com.example.myapplication;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.bluetooth.le.ScanFilter;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,8 +20,10 @@ import java.util.Arrays;
 
 public class LevelActivity extends AppCompatActivity implements View.OnClickListener{
     Bundle arguments;
+    int level;
     String s;
     int idD = 100;
+    int step = 0;
     int id_further = 0;
     int id;// Переменная, содержащая id, выбранной шашки.
     int turn = 1; // Очередность хода.
@@ -63,26 +66,6 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
                             }
                         } else {
                             id = dr[i].id_draught;
-                            //dr[i].printPossibleMovesKing();
-                            /*
-                            int[][] moves = dr[i].getPossibleMovesKing();
-
-                            for (int i2 = 0; i2 < dr[i].getPossibleMovesKing().length; i2++) {
-                                if (dr[i].getPossibleMovesKing()[i2][0] != -1) {
-                                    id = dr[i].id_draught;
-                                    board[dr[i].getPossibleMovesKing()[i2][0]][dr[i].getPossibleMovesKing()[i2][1]] = 3;
-                                    String s = Arrays.toString(dr[i].getPossibleMovesKing()[i2]);
-                                    Log.d("f", s);
-                                }
-                            }
-
-                            for (int[] move : moves) {
-                                board[move[0]][move[1]] = 3;
-                                String s = Arrays.toString(move);
-                                Log.d("f", s);
-                            }
-                            */
-
                             for (int i2 = 1; i2 < 8; i2++) {
                                 if ((dr[i].x + i2 > 7 || dr[i].y + i2 > 7) || b.board[dr[i].x + i2][dr[i].y + i2] != 0) {
                                     break;
@@ -153,24 +136,6 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
 
                     } else {
                         id = dr[i].id_draught;
-                        /*
-                            int[][] moves = dr[i].getPossibleMovesKing();
-
-                            for (int i2 = 0; i2 < dr[i].getPossibleMovesKing().length; i2++) {
-                                if (dr[i].getPossibleMovesKing()[i2][0] != -1) {
-                                    id = dr[i].id_draught;
-                                    board[dr[i].getPossibleMovesKing()[i2][0]][dr[i].getPossibleMovesKing()[i2][1]] = 3;
-                                    String s = Arrays.toString(dr[i].getPossibleMovesKing()[i2]);
-                                    Log.d("f", s);
-                                }
-                            }
-
-                            for (int[] move : moves) {
-                                board[move[0]][move[1]] = 3;
-                                String s = Arrays.toString(move);
-                                Log.d("f", s);
-                            }
-                            */
                         int k;
                         k = turn == 1 ? 22 : 11;
                         int opponent;
@@ -254,9 +219,6 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
         public boolean anyFight (Draught[] dr) {
             boolean any_fight = false;
             for (int i = 0; i < 12; i++) {
-                /*if (arguments.get("level").toString().equals("1")) {
-                    break;
-                }*/
                     if (dr[i].canFight()) {
                         s = Integer.toString(dr[i].x) + " " + Integer.toString(dr[i].y);
                         Log.d("f", s);
@@ -266,6 +228,37 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
                     }
                 }
             return any_fight;
+        }
+
+        public void changeBoard() {
+            int w = 0;
+            int bl = 0;
+
+            for (int i = 0; i < 8; i++) {
+                for (int j = 0; j < 8; j++) {
+                    if (b.board[i][j] == 1) {
+                        white[w].x = i;
+                        white[w].y = j;
+                        white[w].is_king = false;
+                        w += 1;
+                    } else if (b.board[i][j] == 2) {
+                        black[bl].x = i;
+                        black[bl].y = j;
+                        black[bl].is_king = false;
+                        bl += 1;
+                    } else if (b.board[i][j] == 11) {
+                        white[w].x = i;
+                        white[w].y = j;
+                        white[w].is_king = true;
+                        w += 1;
+                    } else if (b.board[i][j] == 22) {
+                        black[bl].x = i;
+                        black[bl].y = j;
+                        black[bl].is_king = true;
+                        bl += 1;
+                    }
+                }
+            }
         }
 
         // Обновление доски.
@@ -477,7 +470,10 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
                 b.board[x1][y1] = dr;
             }
             // Смена хода.
-            if (arguments.get("level").toString().equals("1") || arguments.get("level").toString().equals("2")) {
+            if (level == 2) {
+                step = step + 1;
+            }
+            if (level == 1 || level == 2) {
                 turn = 1;
             } else {
                 turn = turn == 1 ? 2 : 1;
@@ -713,6 +709,7 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
                 clear10();
                 b.updateboard();
             }
+            step += 1;
         }
 
         public void kingFight(int x1, int y1, Draught[] opponent) {
@@ -859,19 +856,21 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
         }
 
         arguments = getIntent().getExtras();
+        level = Integer.parseInt(arguments.get("level").toString());
 
-
-        showInfoAlert(arguments.get("level").toString());
-        switch (arguments.get("level").toString()) {
-            case "1":
+        showInfoAlert(level);
+        switch (level) {
+            case 1:
                 b.board[0][0] = 1;
                 break;
-            case "2":
+            case 2:
                 b.board[5][5] = 11;
                 break;
-            case "3":
-                b.board[2][4] = 1;
-                b.board[3][3] = 2;
+            case 3:
+                b.board[3][3] = 1;
+                b.board[4][4] = 2;
+                b.board[4][6] = 2;
+                b.board[2][6] = 2;
                 break;
         }
 
@@ -891,10 +890,12 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
                 if(b.board[i][j] == 1) {
                     white[w].x = i;
                     white[w].y = j;
+                    white[w].is_king = false;
                     w += 1;
                 } else if (b.board[i][j] == 2) {
                     black[bl].x = i;
                     black[bl].y = j;
+                    black[bl].is_king = false;
                     bl += 1;
                 } else if (b.board[i][j] == 11) {
                     white[w].x = i;
@@ -911,44 +912,37 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
-    private void showInfoAlert (String text) {
+    private void showInfoAlert (int level) {
         AlertDialog.Builder builder = new AlertDialog.Builder(LevelActivity.this);
-        switch (text) {
-            case "1":
-                builder.setTitle("Задание")
-                        .setMessage("Обычная шашка передвигается вперёд на одну клетку по диагонали. Доберитесь до противоположного края доски, используя эту информацию.")
-                        .setPositiveButton("Поехали", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                dialogInterface.cancel();
-                            }
-                        })
-                        .setNegativeButton("Назад", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                Intent intent = new Intent(LevelActivity.this, ExActivity.class);
-                                startActivity(intent);
-                            }
-                        });
+        String text = "";
+        switch (level) {
+            case 1:
+                text = "Обычная шашка передвигается вперёд на одну клетку по диагонали. Доберитесь до противоположного края доски, используя эту информацию.";
                 break;
-            case "2":
-                builder.setTitle("Задание")
-                        .setMessage("Дамка ходит по диагонали на любое свободное поле как вперёд, так и назад, но не может перескакивать свои шашки или дамки. Сделайте несколько ходов!")
-                        .setPositiveButton("Поехали", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                dialogInterface.cancel();
-                            }
-                        })
-                        .setNegativeButton("Назад", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                Intent intent = new Intent(LevelActivity.this, ExActivity.class);
-                                startActivity(intent);
-                            }
-                        });
-                    break;
+            case 2:
+                text = "Дамка ходит по диагонали на любое свободное поле как вперёд, так и назад, но не может перескакивать свои шашки или дамки. Сделайте несколько ходов!";
+                break;
+            case 3:
+                text = "Взятие обязательно. Побитые шашки и дамки снимаются только после завершения хода.\n" +
+                        "Простая шашка, находящаяся рядом с шашкой соперника, за которой имеется свободное поле, переносится через эту шашку на это свободное поле. Если есть возможность продолжить взятие других шашек соперника, то это взятие продолжается, пока бьющая шашка не достигнет положения, из которого бой невозможен. Взятие простой шашкой производится как вперёд, так и назад.";
+                break;
         }
+            builder.setTitle("Задание")
+                    .setMessage(text)
+                    .setPositiveButton("Поехали", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.cancel();
+                        }
+                    })
+                    .setNegativeButton("Назад", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            Intent intent = new Intent(LevelActivity.this, ExActivity.class);
+                            startActivity(intent);
+                        }
+                    });
+
         AlertDialog dialog = builder.create();
         dialog.show();
     }
@@ -997,26 +991,53 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
                 }
             }
         }
+        result();
     }
 
     public void result () {
-        int w = 0;
-        int bl = 0;
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                if (b.board[i][j] == 1 || b.board[i][j] == 11) {
-                    w += 1;
-                } else if (b.board[i][j] == 2 || b.board[i][j] == 22) {
-                    bl += 1;
+        switch (level) {
+            case 1:
+                for (int i = 0; i < 8; i++) {
+                    for (int j = 0; j < 8; j++) {
+                        if (b.board[i][j] == 11) {
+                            b.board[i][j] = 0;
+                            b.board[5][5] = 11;
+                            b.changeBoard();
+                            b.updateboard();
+                            level = 2;
+                            showInfoAlert(level);
+
+                        }
+                    }
                 }
-            }
-        }
-        if (w == 0) {
-            Toast toast = Toast.makeText(getApplicationContext(), "Чёрные выиграли!!!", Toast.LENGTH_LONG);
-            toast.show();
-        } else if (bl == 0) {
-            Toast toast = Toast.makeText(getApplicationContext(), "Белые выиграли!!!", Toast.LENGTH_LONG);
-            toast.show();
+                break;
+            case 2:
+                if (step >= 7) {
+                    for (int i = 0; i < 8; i++) {
+                        for (int j = 0; j < 8; j++) {
+                            if (b.board[i][j] == 11) {
+                                b.board[i][j] = 0;
+                                b.board[3][3] = 1;
+                                b.board[4][4] = 2;
+                                b.board[4][6] = 2;
+                                b.board[2][6] = 2;
+                                b.changeBoard();
+                                b.updateboard();
+                                level = 3;
+                                showInfoAlert(level);
+                            }
+                        }
+                    }
+                    step = 0;
+                }
+                break;
+            case 3:
+                if (step == 1) {
+                    Toast toast = Toast.makeText(getApplicationContext(), "Продалжайте взятие", Toast.LENGTH_SHORT);
+                    toast.show();
+                    step += 1;
+                }
+                break;
         }
     }
 
@@ -1049,11 +1070,4 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
         array[myArray.length] = element;
         return array;
     }
-
-    public static int[][] join(int[][] a, int[][] b) {
-        int[][] result = Arrays.copyOf(a, a.length + b.length);
-        System.arraycopy(b, 0, result, a.length, b.length);
-        return result;
-    }
-
 }
