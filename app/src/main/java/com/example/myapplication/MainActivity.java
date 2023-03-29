@@ -31,14 +31,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                          {0, 2, 0, 2, 0, 2, 0, 2}};*/
 
 
-        int[][] board = {{0, 0, 0, 0, 1, 0, 0, 0},
+        int[][] board = {{11, 0, 0, 0, 0, 0, 0, 0},
                          {0, 0, 0, 0, 0, 0, 0, 0},
-                         {0, 0, 1, 0, 0, 0, 2, 0},
+                         {0, 0, 2, 0, 0, 0, 0, 0},
+                         {0, 0, 0, 2, 0, 0, 0, 0},
+                         {0, 0, 0, 0, 1, 0, 0, 0},
+                         {0, 0, 0, 0, 0, 1, 0, 0},
                          {0, 0, 0, 0, 0, 0, 0, 0},
-                         {0, 0, 0, 0, 2, 0, 0, 0},
-                         {0, 0, 0, 0, 0, 0, 0, 0},
-                         {0, 0, 1, 0, 0, 0, 0, 0},
-                         {0, 0, 0, 0, 0, 0, 0, 2}}; // Виртуальное поле.
+                         {0, 0, 0, 0, 0, 0, 0, 0}}; // Виртуальное поле.
 
         ImageButton[][] boardIm = new ImageButton[8][8];
 
@@ -480,6 +480,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Log.d("f",  "board: " + s + " x: " + Integer.toString(x) + " y: " + Integer.toString(y));
             }*/
             int opponent = 10;
+            int teammate = 10;
+            int kt = 10;
             boolean can_fight = false;
             if (!is_king) {
                 if (x != -100 && y != -100) {
@@ -506,15 +508,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             } else {
                 if (x != -100 && y != -100) {
                     if (b.board[x][y] == 1 || b.board[x][y] == 11) {
+                        teammate = 1;
+                        kt = 11;
                         opponent = 2;
                         k = 22;
                     } else if (b.board[x][y] == 2 || b.board[x][y] == 22) {
+                        teammate = 2;
+                        kt = 22;
                         opponent = 1;
                         k = 11;
                     }
                     for (int i = 1; i < 8; i++) {
                         if (x + i + 1 <= 7 && y + i + 1 <= 7) {
-                            if ((b.board[x + i + 1][y + i + 1] == opponent && b.board[x + i][y + i] == opponent) || (b.board[x + i + 1][y + i + 1] == k && b.board[x + i][y + i] == k)) {
+                            if ((b.board[x + i + 1][y + i + 1] == opponent || b.board[x + i + 1][y + i + 1] == k || b.board[x + i + 1][y + i + 1] == kt || b.board[x + i + 1][y + i + 1] == teammate) && (b.board[x + i][y + i] == opponent || b.board[x + i][y + i] == k || b.board[x + i][y + i] == kt || b.board[x + i][y + i] == teammate)) {
                                 Log.d("f", "aaaaaaa");
                                 break;
                             }
@@ -538,7 +544,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             }
                         }
                         if (x - i - 1 >= 0 && y + i + 1 <= 7) {
-                            if ((b.board[x - i - 1][y + i + 1] == opponent && b.board[x - i][y + i] == opponent) || (b.board[x - i - 1][y + i + 1] == k && b.board[x - i][y + i] == k)) {
+                            if ((b.board[x - i - 1][y + i + 1] == opponent || b.board[x - i - 1][y + i + 1] == k || b.board[x - i - 1][y + i + 1] == kt || b.board[x - i - 1][y + i + 1] == teammate) && (b.board[x - i][y + i] == opponent || b.board[x - i][y + i] == k || b.board[x - i][y + i] == kt || b.board[x - i][y + i] == teammate)) {
                                 break;
                             }
                         }
@@ -554,7 +560,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             }
                         }
                         if (x - i - 1 >= 0 && y - i - 1 >= 0) {
-                            if ((b.board[x - i - 1][y - i - 1] == opponent && b.board[x - i][y - i] == opponent) || (b.board[x - i - 1][y - i - 1] == k && b.board[x - i][y - i] == k)) {
+                            if ((b.board[x - i - 1][y - i - 1] == opponent || b.board[x - i - 1][y - i - 1] == k || b.board[x - i - 1][y - i - 1] == kt || b.board[x - i - 1][y - i - 1] == teammate) && (b.board[x - i][y - i] == opponent || b.board[x - i][y - i] == k || b.board[x - i][y - i] == kt || b.board[x - i][y - i] == teammate)) {
                                 Log.d("f", "aaaaaaabbbbbbbb");
                                 break;
                             }
@@ -571,7 +577,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             }
                         }
                         if (x + i + 1 <= 7 && y - i - 1 >= 0) {
-                            if ((b.board[x + i + 1][y - i - 1] == opponent && b.board[x + i][y - i] == opponent) || (b.board[x + i + 1][y - i - 1] == k && b.board[x + i][y - i] == k)) {
+                            if ((b.board[x + i + 1][y - i - 1] == opponent || b.board[x + i + 1][y - i - 1] == k || b.board[x + i + 1][y - i - 1] == kt || b.board[x + i + 1][y - i - 1] == teammate) && (b.board[x + i][y - i] == opponent || b.board[x + i][y - i] == k || b.board[x + i][y - i] == kt || b.board[x + i][y - i] == teammate)) {
                                 break;
                             }
                         }

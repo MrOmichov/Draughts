@@ -1036,7 +1036,10 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
                     Toast toast = Toast.makeText(getApplicationContext(), "Продалжайте взятие", Toast.LENGTH_SHORT);
                     toast.show();
                     step += 1;
+                } else if (step == 4) {
+                    Log.d("f", "123");
                 }
+
                 break;
         }
     }
