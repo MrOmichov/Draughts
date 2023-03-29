@@ -11,6 +11,10 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Arrays;
 
 public class LevelActivity extends AppCompatActivity implements View.OnClickListener{
@@ -23,14 +27,14 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
 
     public class Board {
 
-        int[][] board = {{1, 0, 1, 0, 1, 0, 1, 0},
-                {0, 1, 0, 1, 0, 1, 0, 1},
-                {1, 0, 1, 0, 1, 0, 1, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 2, 0, 2, 0, 2, 0, 2},
-                {2, 0, 2, 0, 2, 0, 2, 0},
-                {0, 2, 0, 2, 0, 2, 0, 2}};
+        int[][] board = {{0, 0, 0, 0, 0, 0, 0, 0},
+                         {0, 0, 0, 0, 0, 0, 0, 0},
+                         {0, 0, 0, 0, 0, 0, 0, 0},
+                         {0, 0, 0, 0, 0, 0, 0, 0},
+                         {0, 0, 0, 0, 0, 0, 0, 0},
+                         {0, 0, 0, 0, 0, 0, 0, 0},
+                         {0, 0, 0, 0, 0, 0, 0, 0},
+                         {0, 0, 0, 0, 0, 0, 0, 0}};
 
         /*
                 int[][] board = {{0, 0, 0, 0, 0, 0, 0, 0},
@@ -333,7 +337,6 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
 
         /*
         public canMove () {
-
         }*/
 
         public int[][] getPossibleMovesKing () {
@@ -474,7 +477,7 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
                 b.board[x1][y1] = dr;
             }
             // Смена хода.
-            if (arguments.get("level").toString().equals("1")) {
+            if (arguments.get("level").toString().equals("1") || arguments.get("level").toString().equals("2")) {
                 turn = 1;
             } else {
                 turn = turn == 1 ? 2 : 1;
@@ -856,16 +859,23 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
         }
 
         arguments = getIntent().getExtras();
+
+
         showInfoAlert(arguments.get("level").toString());
-        if (arguments.get("level").toString().equals("1")) {
-            for (int[] i:
-                 b.board) {
-                for (int j = 0; j < 8; j++) {
-                    i[j] = 0;
-                }
-            }
+        switch (arguments.get("level").toString()) {
+            case "1":
+                b.board[0][0] = 1;
+                break;
+            case "2":
+                b.board[5][5] = 11;
+                break;
+            case "3":
+                b.board[2][4] = 1;
+                b.board[3][3] = 2;
+                break;
         }
-        b.board[0][0] = 1;
+
+
         b.updateboard();
 
         for (int i = 0; i < 12; i++) {
@@ -902,9 +912,9 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void showInfoAlert (String text) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(LevelActivity.this);
         switch (text) {
             case "1":
-                AlertDialog.Builder builder = new AlertDialog.Builder(LevelActivity.this);
                 builder.setTitle("Задание")
                         .setMessage("Обычная шашка передвигается вперёд на одну клетку по диагонали. Доберитесь до противоположного края доски, используя эту информацию.")
                         .setPositiveButton("Поехали", new DialogInterface.OnClickListener() {
@@ -920,9 +930,27 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
                                 startActivity(intent);
                             }
                         });
-                AlertDialog dialog = builder.create();
-                dialog.show();
+                break;
+            case "2":
+                builder.setTitle("Задание")
+                        .setMessage("Дамка ходит по диагонали на любое свободное поле как вперёд, так и назад, но не может перескакивать свои шашки или дамки. Сделайте несколько ходов!")
+                        .setPositiveButton("Поехали", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.cancel();
+                            }
+                        })
+                        .setNegativeButton("Назад", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                Intent intent = new Intent(LevelActivity.this, ExActivity.class);
+                                startActivity(intent);
+                            }
+                        });
+                    break;
         }
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
     @Override
     public void onClick(View v) {
