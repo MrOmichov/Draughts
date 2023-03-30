@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 import java.util.Arrays;
+import java.util.concurrent.TimeUnit;
 
 public class LevelActivity extends AppCompatActivity implements View.OnClickListener {
     Bundle arguments;
@@ -314,121 +315,6 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
         /*
         public canMove () {
         }*/
-
-        public int[][] getPossibleMovesKing () {
-            /*
-            int[] el = new int[2];
-            for (int i = 0; i < 13; i++) {
-                for (int j = 0; j < 2; j++) {
-                    moves[i][j] = -1;
-                }
-            }*/
-            int[] el = new int[2];
-            int[][] moves = new int[0][2];
-            for (int i = 1; i < 8; i++) {
-                if ((x + i > 7 || y + i > 7) || b.board[x + i][y + i] != 0) {
-                    break;
-                }
-                el[0] = x + i;
-                el[1] = y + i;
-                moves = addElement(moves, el);
-
-            }
-
-            for (int i = 1; i < 8; i++) {
-                if ((x - i < 0 || y + i > 7) || b.board[x - i][y + i] != 0) {
-                    break;
-                }
-                el[0] = x - i;
-                el[1] = y + i;
-                moves = addElement(moves, el);
-
-            }
-            for (int[] move : moves) {
-                System.out.println(Arrays.toString(move));
-            }
-            /*
-            for (int i = 1; i < 8; i++) {
-                if ((x - i < 0 || y - i < 0) || b.board[x - i][y - i] != 0) {
-                    break;
-                }
-                el[0] = x - i;
-                el[1] = y - i;
-                moves = addElement(moves, el);
-            }
-
-            for (int i = 1; i < 8; i++) {
-                if ((x + i > 7 || y - i < 0) || b.board[x + i][y - i] != 0) {
-                    break;
-                }
-                el[0] = x + i;
-                el[1] = y - i;
-                moves = addElement(moves, el);
-            }
-            */
-            return moves;
-
-            /*
-            int[][] moves = new int[13][2];
-            for (int i = 0; i < 13; i++ ) {
-                moves[i][0] = -1;
-                moves[i][1] = -1;
-            }
-
-            for (int i = 1; i < 8; i++) {
-                if ((x + i > 7 || y + i > 7) || b.board[x + i][y + i] != 0) {
-                    break;
-                }
-                for (int j = 1; j < 8; j++) {
-                    if (moves[j][0] == -1) {
-                        moves[j][0] = x + i;
-                        moves[j][1] = y + i;
-                        break;
-                    }
-                }
-            }
-
-            for (int i = 1; i < 8; i++) {
-                if ((x - i < 0 || y + i > 7) || b.board[x - i][y + i] != 0) {
-                    break;
-                }
-                for (int j = 1; j < 8; j++) {
-                    if (moves[j][0] == -1) {
-                        moves[j][0] = x - i;
-                        moves[j][1] = y + i;
-                        break;
-                    }
-                }
-            }
-
-            for (int i = 1; i < 8; i++) {
-                if ((x - i < 0 || y - i < 0) || b.board[x - i][y - i] != 0) {
-                    break;
-                }
-                for (int j = 1; j < 8; j++) {
-                    if (moves[j][0] == -1) {
-                        moves[j][0] = x - i;
-                        moves[j][1] = y - i;
-                        break;
-                    }
-                }
-            }
-
-            for (int i = 1; i < 8; i++) {
-                if ((x + i > 7 || y - i < 0) || b.board[x + i][y - i] != 0) {
-                    break;
-                }
-                for (int j = 1; j < 8; j++) {
-                    if (moves[j][0] == -1) {
-                        moves[j][0] = x + i;
-                        moves[j][1] = y - i;
-                        break;
-                    }
-                }
-            }
-            return moves;
-            */
-        }
 
         public void move(int x1, int y1) {
             Log.d("f", "move draught");
@@ -885,7 +771,7 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LevelActivity.this, MenuActivity.class);
+                Intent intent = new Intent(LevelActivity.this, ExActivity.class);
                 startActivity(intent);
             }
         });
@@ -1208,6 +1094,12 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
                 }
             }
         }
+            if (b.board[3][5] == 0 && b.board[1][3] == 2) {
+                Toast toast = Toast.makeText(getApplicationContext(), "Неправильно", Toast.LENGTH_SHORT);
+                toast.show();
+                Intent intent = new Intent(LevelActivity.this, ExActivity.class);
+                startActivity(intent);
+            }
     }
 
     // Добавление в массив элемента.

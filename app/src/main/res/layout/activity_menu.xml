@@ -50,6 +50,7 @@
             android:layout_marginEnd="0dp"
             android:background="@android:color/holo_red_dark"
             android:fontFamily="@font/montserrat_alternates_bold"
+            android:onClick="StartBotActivity"
             android:text="Игра с компьютером"
             android:textColor="#FFFFFF"
             android:textSize="18sp" />

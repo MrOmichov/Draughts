@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     int turn = 1; // Очередность хода.
 
     public class Board {
-/*
+
         int[][] board = {{1, 0, 1, 0, 1, 0, 1, 0},
                          {0, 1, 0, 1, 0, 1, 0, 1},
                          {1, 0, 1, 0, 1, 0, 1, 0},
@@ -30,9 +30,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                          {0, 0, 0, 0, 0, 0, 0, 0},
                          {0, 2, 0, 2, 0, 2, 0, 2},
                          {2, 0, 2, 0, 2, 0, 2, 0},
-                         {0, 2, 0, 2, 0, 2, 0, 2}};*/
+                         {0, 2, 0, 2, 0, 2, 0, 2}};
 
-
+        /*
         int[][] board = {{0, 0, 0, 0, 0, 0, 0, 0},
                          {0, 0, 0, 0, 0, 0, 0, 0},
                          {0, 0, 0, 0, 0, 0, 0, 0},
@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                          {0, 0, 0, 0, 0, 0, 0, 0},
                          {0, 0, 2, 0, 0, 0, 0, 0},
                          {0, 11, 0, 0, 0, 0, 0, 0}}; // Виртуальное поле.
+         */
 
         ImageButton[][] boardIm = new ImageButton[8][8];
 
@@ -361,12 +362,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         public boolean canFight () {
             int k = 0;
-            //s = Integer.toString(turn);
-            //Log.d("f",  "turn: " + s);
-            /*if (x > -100 && y > -100) {
-                s = Integer.toString(b.board[x][y]);
-                Log.d("f",  "board: " + s + " x: " + Integer.toString(x) + " y: " + Integer.toString(y));
-            }*/
             int opponent = 10;
             int teammate = 10;
             int kt = 10;
@@ -931,10 +926,4 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             array[myArray.length] = element;
             return array;
         }
-
-    public static int[][] join(int[][] a, int[][] b) {
-        int[][] result = Arrays.copyOf(a, a.length + b.length);
-        System.arraycopy(b, 0, result, a.length, b.length);
-        return result;
-    }
 }

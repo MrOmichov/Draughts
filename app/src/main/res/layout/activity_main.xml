@@ -15,21 +15,20 @@
         android:layout_marginStart="13dp"
         android:layout_marginTop="16dp"
         android:background="@android:color/holo_red_dark"
-        android:onClick="back"
         android:text="Назад"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/draughts_board"
-        android:layout_width="385dp"
-        android:layout_height="385dp"
+        android:layout_width="385sp"
+        android:layout_height="385sp"
         android:layout_marginTop="173dp"
+        android:src="@drawable/draughts_board"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/draughts_board" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:layout_width="385dp"

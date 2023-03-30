@@ -2,9 +2,11 @@ package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
@@ -12,6 +14,8 @@ import java.util.Arrays;
 
 public class BotActivity extends AppCompatActivity implements View.OnClickListener {
 
+    double score = Double.MAX_VALUE;
+    String s;
     int idD = 100;
     int id_further = 0;
     int id;// Переменная, содержащая id, выбранной шашки.
@@ -21,22 +25,32 @@ public class BotActivity extends AppCompatActivity implements View.OnClickListen
     public class Board {
         /*
         int[][] board = {{1, 0, 1, 0, 1, 0, 1, 0},
-                         {0, 1, 0, 1, 0, 1, 0, 1},
-                         {1, 0, 1, 0, 1, 0, 1, 0},
-                         {0, 0, 0, 0, 0, 0, 0, 0},
-                         {0, 0, 0, 0, 0, 0, 0, 0},
-                         {0, 2, 0, 2, 0, 2, 0, 2},
-                         {2, 0, 2, 0, 2, 0, 2, 0},
-                         {0, 2, 0, 2, 0, 2, 0, 2}};
-    */
-        int[][] board = {{1, 0, 1, 0, 1, 0, 1, 0},
                 {0, 1, 0, 1, 0, 1, 0, 1},
-                {1, 0, 1, 0, 2, 0, 2, 0},
+                {1, 0, 1, 0, 1, 0, 1, 0},
                 {0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 2, 0, 0, 0},
-                {0, 2, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 2, 0, 2, 0, 2, 0, 2},
                 {2, 0, 2, 0, 2, 0, 2, 0},
-                {0, 2, 0, 2, 0, 2, 0, 2}}; // Виртуальное поле.
+                {0, 2, 0, 2, 0, 2, 0, 2}};*/
+
+
+        int[][] board = {{1, 0, 0, 0, 0, 0, 0, 0},
+                         {0, 0, 0, 0, 0, 0, 0, 0},
+                         {0, 0, 0, 0, 0, 0, 0, 0},
+                         {0, 0, 0, 0, 0, 0, 0, 0},
+                         {0, 0, 0, 0, 0, 0, 0, 0},
+                         {0, 0, 0, 0, 0, 0, 0, 0},
+                         {0, 0, 0, 0, 0, 0, 0, 0},
+                         {0, 0, 0, 0, 0, 0, 0, 2}}; // Виртуальное поле.
+
+        int[][] vBoard = {{0, 0, 0, 0, 0, 0, 0, 0},
+                        {0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0}};
 
         ImageButton[][] boardIm = new ImageButton[8][8];
 
@@ -54,12 +68,89 @@ public class BotActivity extends AppCompatActivity implements View.OnClickListen
                                 board[x1 + d][dr[i].getPossibleMoves()[i1]] = 3;
                             }
                         } else {
-                            // dr[i].printPossibleMovesKing();
-                            for (int i2 = 0; i2 < dr[i].getPossibleMovesKing().length; i2++) {
-                                if (dr[i].getPossibleMovesKing()[i2][0] != -1) {
-                                    id = dr[i].id_draught;
-                                    board[dr[i].getPossibleMovesKing()[i2][0]][dr[i].getPossibleMovesKing()[i2][1]] = 3;
+                            id = dr[i].id_draught;
+
+                            for (int i2 = 1; i2 < 8; i2++) {
+                                if ((dr[i].x + i2 > 7 || dr[i].y + i2 > 7) || b.board[dr[i].x + i2][dr[i].y + i2] != 0) {
+                                    break;
                                 }
+                                b.board[dr[i].x + i2][dr[i].y + i2] = 3;
+                            }
+
+                            for (int i2 = 1; i2 < 8; i2++) {
+                                if ((dr[i].x - i2 < 0 || dr[i].y + i2 > 7) || b.board[dr[i].x - i2][dr[i].y + i2] != 0) {
+                                    break;
+                                }
+                                b.board[dr[i].x - i2][dr[i].y + i2] = 3;
+
+                            }
+
+                            for (int i2 = 1; i2 < 8; i2++) {
+                                if ((dr[i].x - i2 < 0 || dr[i].y - i2 < 0) || b.board[dr[i].x - i2][dr[i].y - i2] != 0) {
+                                    break;
+                                }
+                                b.board[dr[i].x - i2][dr[i].y - i2] = 3;
+                            }
+
+                            for (int i2 = 1; i2 < 8; i2++) {
+                                if ((dr[i].x + i2 > 7 || dr[i].y - i2 < 0) || b.board[dr[i].x + i2][dr[i].y - i2] != 0) {
+                                    break;
+                                }
+                                b.board[dr[i].x + i2][dr[i].y - i2] = 3;
+                            }
+                        }
+                    }
+                    break;
+                }
+            }
+            updateboard();
+        }
+
+        public void vSetMoves(int x1, int y1, Draught[] dr, int[][] board) {
+            Log.d("f", "vSetMoves board");
+            int d;
+            d = turn == 1 ? 1 : -1;
+            for (int i = 0; i < 12; i++) {
+                if (dr[i].x == x1 && dr[i].y == y1) {
+                    for (int i1 = 0; i1 < 2; i1++) {
+                        if (!dr[i].is_king) {
+                            if (dr[i].getPossibleMoves()[i1] != -1) {
+                                id = dr[i].id_draught;
+                                if (calculateScore(dr[i].vMove(dr[i].x + d, dr[i].getPossibleMoves()[i1], board)) < score) {
+                                    Log.d("f", "vSetMoves");
+                                    score = calculateScore(board);
+                                    b.vBoard = board;
+                                }
+                            }
+                        } else {
+                            id = dr[i].id_draught;
+                            for (int i2 = 1; i2 < 8; i2++) {
+                                if ((dr[i].x + i2 > 7 || dr[i].y + i2 > 7) || board[dr[i].x + i2][dr[i].y + i2] != 0) {
+                                    break;
+                                }
+                                board[dr[i].x + i2][dr[i].y + i2] = 3;
+                            }
+
+                            for (int i2 = 1; i2 < 8; i2++) {
+                                if ((dr[i].x - i2 < 0 || dr[i].y + i2 > 7) || board[dr[i].x - i2][dr[i].y + i2] != 0) {
+                                    break;
+                                }
+                                board[dr[i].x - i2][dr[i].y + i2] = 3;
+
+                            }
+
+                            for (int i2 = 1; i2 < 8; i2++) {
+                                if ((dr[i].x - i2 < 0 || dr[i].y - i2 < 0) || board[dr[i].x - i2][dr[i].y - i2] != 0) {
+                                    break;
+                                }
+                                b.board[dr[i].x - i2][dr[i].y - i2] = 3;
+                            }
+
+                            for (int i2 = 1; i2 < 8; i2++) {
+                                if ((dr[i].x + i2 > 7 || dr[i].y - i2 < 0) || board[dr[i].x + i2][dr[i].y - i2] != 0) {
+                                    break;
+                                }
+                                b.board[dr[i].x + i2][dr[i].y - i2] = 3;
                             }
                         }
                     }
@@ -76,58 +167,88 @@ public class BotActivity extends AppCompatActivity implements View.OnClickListen
                     Log.d("f", "setFights board");
                     id = dr[i].id_draught;
                     if (!dr[i].is_king) {
+                        /*
                         for (int j = 0; j < dr[i].getPossibleFights().length; j++) {
                             String s = Integer.toString(dr[i].getPossibleFights()[j][0]);
                             Log.d("f", s);
                             s = Integer.toString(dr[i].getPossibleFights()[j][1]);
                             Log.d("f", s);
                             b.board[dr[i].getPossibleFights()[j][0]][dr[i].getPossibleFights()[j][1]] = 3;
+                        }*/
+                        int k;
+                        k = turn == 1 ? 22 : 11;
+                        int opponent;
+                        opponent = turn == 1 ? 2 : 1;
+                        if ((dr[i].x + 2 <= 7 && dr[i].y + 2 <= 7) && (b.board[dr[i].x + 1][dr[i].y + 1] == opponent || b.board[dr[i].x + 1][dr[i].y + 1] == k) && b.board[dr[i].x + 2][dr[i].y + 2] == 0) {
+                            b.board[dr[i].x + 2][dr[i].y + 2] = 3;
                         }
+                        if ((dr[i].x - 2 >= 0 && dr[i].y + 2 <= 7) && (b.board[dr[i].x - 1][dr[i].y + 1] == opponent || b.board[dr[i].x - 1][dr[i].y + 1] == k) && b.board[dr[i].x - 2][dr[i].y + 2] == 0) {
+                            b.board[dr[i].x - 2][dr[i].y + 2] = 3;
+                        }
+                        if ((dr[i].x - 2 >= 0 && dr[i].y - 2 >= 0) && (b.board[dr[i].x - 1][dr[i].y - 1] == opponent || b.board[dr[i].x - 1][dr[i].y - 1] == k) && b.board[dr[i].x - 2][dr[i].y - 2] == 0) {
+                            b.board[dr[i].x - 2][dr[i].y - 2] = 3;
+                        }
+                        if ((dr[i].x + 2 <= 7 && dr[i].y - 2 >= 0) && (b.board[dr[i].x + 1][dr[i].y - 1] == opponent || b.board[dr[i].x + 1][dr[i].y - 1] == k) && b.board[dr[i].x + 2][dr[i].y - 2] == 0) {
+                            b.board[dr[i].x + 2][dr[i].y - 2] = 3;
+                        }
+
                     } else {
-                        for (int j = 0; j < dr[i].getPossibleFights().length; j++) {
-                            String s = Integer.toString(dr[i].getPossibleFights()[j][0]) + Integer.toString(dr[i].getPossibleFights()[j][1]);
-                            Log.d("f", s);
-                            s = Integer.toString(dr[i].x);
-                            Log.d("f", s);
-                            s = Integer.toString(dr[i].y);
-                            Log.d("f", s);
-                            if (dr[i].getPossibleFights()[j][0] > dr[i].x && dr[i].getPossibleFights()[j][1] > dr[i].y) {
-                                for (int i1 = 1; i1 < 8; i1++) {
-                                    s = Integer.toString(i1);
+                        id = dr[i].id_draught;
+                        /*
+                            int[][] moves = dr[i].getPossibleMovesKing();
+
+                            for (int i2 = 0; i2 < dr[i].getPossibleMovesKing().length; i2++) {
+                                if (dr[i].getPossibleMovesKing()[i2][0] != -1) {
+                                    id = dr[i].id_draught;
+                                    board[dr[i].getPossibleMovesKing()[i2][0]][dr[i].getPossibleMovesKing()[i2][1]] = 3;
+                                    String s = Arrays.toString(dr[i].getPossibleMovesKing()[i2]);
                                     Log.d("f", s);
-                                    if ((dr[i].getPossibleFights()[j][0] + i1 <= 7 && dr[i].getPossibleFights()[j][1] + i1 <= 7) && (b.board[dr[i].getPossibleFights()[j][0] + i1][dr[i].getPossibleFights()[j][1] + i1] == 0 || b.board[dr[i].getPossibleFights()[j][0] + i1][dr[i].getPossibleFights()[j][1] + i1] == 3)) {
-                                        b.board[dr[i].getPossibleFights()[j][0] + i1][dr[i].getPossibleFights()[j][1] + i1] = 3;
-                                    } else {
-                                        break;
-                                    }
                                 }
                             }
-                            if (dr[i].getPossibleFights()[j][0] < dr[i].x && dr[i].getPossibleFights()[j][1] > dr[i].y) {
-                                for (int i1 = 1; i1 < 8; i1++) {
-                                    if ((dr[i].getPossibleFights()[j][0] - i1 >= 0 && dr[i].getPossibleFights()[j][1] + i1 <= 7) && (b.board[dr[i].getPossibleFights()[j][0] - i1][dr[i].getPossibleFights()[j][1] + i1] == 0 || b.board[dr[i].getPossibleFights()[j][0] - i1][dr[i].getPossibleFights()[j][1] + i1] == 3)) {
-                                        b.board[dr[i].getPossibleFights()[j][0] - i1][dr[i].getPossibleFights()[j][1] + i1] = 3;
-                                    } else {
-                                        break;
-                                    }
-                                }
+
+                            for (int[] move : moves) {
+                                board[move[0]][move[1]] = 3;
+                                String s = Arrays.toString(move);
+                                Log.d("f", s);
                             }
-                            if (dr[i].getPossibleFights()[j][0] < dr[i].x && dr[i].getPossibleFights()[j][1] < dr[i].y) {
-                                for (int i1 = 1; i1 < 8; i1++) {
-                                    if ((dr[i].getPossibleFights()[j][0] - i1 >= 0 && dr[i].getPossibleFights()[j][1] - i1 >= 0) && (b.board[dr[i].getPossibleFights()[j][0] - i1][dr[i].getPossibleFights()[j][1] - i1] == 0 || b.board[dr[i].getPossibleFights()[j][0] - i1][dr[i].getPossibleFights()[j][1] - i1] == 3)) {
-                                        b.board[dr[i].getPossibleFights()[j][0] - i1][dr[i].getPossibleFights()[j][1] - i1] = 3;
-                                    } else {
-                                        break;
-                                    }
+                            */
+                        int k;
+                        k = turn == 1 ? 22 : 11;
+                        int opponent;
+                        opponent = turn == 1 ? 2 : 1;
+                        int[][] fights = dr[i].getPossibleFights();
+                        Log.d("f", Arrays.toString(fights));
+                        if (fights[0][0] != -1) {
+                            for (int i2 = 1; i2 < 8; i2++) {
+                                if ((fights[0][0] + i2 > 7 || fights[0][1] + i2 > 7) || b.board[fights[0][0] + i2][fights[0][1] + i2] != 0) {
+                                    break;
                                 }
+                                b.board[fights[0][0] + i2][fights[0][1] + i2] = 3;
                             }
-                            if (dr[i].getPossibleFights()[j][0] > dr[i].x && dr[i].getPossibleFights()[j][1] < dr[i].y) {
-                                for (int i1 = 1; i1 < 8; i1++) {
-                                    if ((dr[i].getPossibleFights()[j][0] + i1 <= 7 && dr[i].getPossibleFights()[j][1] - i1 >= 0) && (b.board[dr[i].getPossibleFights()[j][0] + i1][dr[i].getPossibleFights()[j][1] - i1] == 0 || b.board[dr[i].getPossibleFights()[j][0] + i1][dr[i].getPossibleFights()[j][1] - i1] == 3)) {
-                                        b.board[dr[i].getPossibleFights()[j][0] + i1][dr[i].getPossibleFights()[j][1] - i1] = 3;
-                                    } else {
-                                        break;
-                                    }
+                        }
+                        if (fights[1][0] != -1) {
+                            for (int i2 = 1; i2 < 8; i2++) {
+                                if ((fights[1][0] - i2 < 0 || fights[1][1] + i2 > 7) || (b.board[fights[1][0] - i2][fights[1][1] + i2] != 0)) {
+                                    break;
                                 }
+                                b.board[fights[1][0] - i2][fights[1][1] + i2] = 3;
+
+                            }
+                        }
+                        if (fights[2][0] != -1) {
+                            for (int i2 = 1; i2 < 8; i2++) {
+                                if ((fights[2][0] - i2 < 0 || fights[2][1] - i2 < 0) || b.board[fights[2][0] - i2][fights[2][1] - i2] != 0) {
+                                    break;
+                                }
+                                b.board[fights[2][0] - i2][fights[2][1] - i2] = 3;
+                            }
+                        }
+                        if (fights[3][0] != -1) {
+                            for (int i2 = 1; i2 < 8; i2++) {
+                                if ((fights[3][0] + i2 > 7 || fights[3][1] - i2 < 0) || b.board[fights[3][0] + i2][fights[3][1] - i2] != 0) {
+                                    break;
+                                }
+                                b.board[fights[3][0] + i2][fights[3][1] - i2] = 3;
                             }
                         }
                     }
@@ -147,6 +268,7 @@ public class BotActivity extends AppCompatActivity implements View.OnClickListen
             }
             clear3();
         }
+
 
         public void fight(int x1, int y1, Draught[] dr) {
             for (int i = 0; i < 12; i++) {
@@ -174,12 +296,23 @@ public class BotActivity extends AppCompatActivity implements View.OnClickListen
         public boolean anyFight (Draught[] dr) {
             boolean any_fight = false;
             for (int i = 0; i < 12; i++) {
-                if (dr[i].canFight()) {
+                if (dr[i].canFight() && b.board[dr[i].x][dr[i].y] != 0) {
                     any_fight = true;
                     break;
                 }
             }
             return any_fight;
+        }
+
+        public boolean anyMove (Draught[] dr) {
+            boolean any_move = false;
+            for (int i = 0; i < 12; i++) {
+                if (dr[i].canMove() && b.board[dr[i].x][dr[i].y] != 0) {
+                    any_move = true;
+                    break;
+                }
+            }
+            return any_move;
         }
 
         // Обновление доски.
@@ -219,8 +352,8 @@ public class BotActivity extends AppCompatActivity implements View.OnClickListen
     public class Draught {
         int id_draught;
         boolean is_king;
-        int x;
-        int y;
+        int x = -100;
+        int y = -100;
         // id шашек, которые под боем.
         boolean furtherFight;
 
@@ -249,116 +382,11 @@ public class BotActivity extends AppCompatActivity implements View.OnClickListen
             return moves;
         }
 
-        public int[][] getPossibleMovesKing () {
-            /*
-            int[] el = new int[2];
-            for (int i = 0; i < 13; i++) {
-                for (int j = 0; j < 2; j++) {
-                    moves[i][j] = -1;
-                }
-            }*/
-            int[] el = new int[2];
-            int[][] moves = new int[0][2];
-            for (int i = 1; i < 8; i++) {
-                if ((x + i > 7 || y + i > 7) || b.board[x + i][y + i] != 0) {
-                    break;
-                }
-                if ((x + i <= 7 || y + i <= 7) || b.board[x + i][y + i] == 0) {
-                    el[0] = x + i;
-                    el[1] = y + i;
-                    moves = addElement(moves, el);
-                }
-            }
+        /*
+        public canMove () {
 
-            for (int i = 1; i < 8; i++) {
-                if ((x - i < 0 || y + i > 7) || b.board[x - i][y + i] != 0) {
-                    break;
-                }
-                el[0] = x - i;
-                el[1] = y + i;
-                moves = addElement(moves, el);
-            }
+        }*/
 
-            for (int i = 1; i < 8; i++) {
-                if ((x - i < 0 || y - i < 0) || b.board[x - i][y - i] != 0) {
-                    break;
-                }
-                el[0] = x - i;
-                el[1] = y - i;
-                moves = addElement(moves, el);
-            }
-
-            for (int i = 1; i < 8; i++) {
-                if ((x + i > 7 || y - i < 0) || b.board[x + i][y - i] != 0) {
-                    break;
-                }
-                el[0] = x + i;
-                el[1] = y - i;
-                moves = addElement(moves, el);
-            }
-
-            return moves;
-            /*
-            int[][] moves = new int[13][2];
-            for (int i = 0; i < 13; i++ ) {
-                moves[i][0] = -1;
-                moves[i][1] = -1;
-            }
-
-            for (int i = 1; i < 8; i++) {
-                if ((x + i > 7 || y + i > 7) || b.board[x + i][y + i] != 0) {
-                    break;
-                }
-                for (int j = 1; j < 8; j++) {
-                    if (moves[j][0] == -1) {
-                        moves[j][0] = x + i;
-                        moves[j][1] = y + i;
-                        break;
-                    }
-                }
-            }
-
-            for (int i = 1; i < 8; i++) {
-                if ((x - i < 0 || y + i > 7) || b.board[x - i][y + i] != 0) {
-                    break;
-                }
-                for (int j = 1; j < 8; j++) {
-                    if (moves[j][0] == -1) {
-                        moves[j][0] = x - i;
-                        moves[j][1] = y + i;
-                        break;
-                    }
-                }
-            }
-
-            for (int i = 1; i < 8; i++) {
-                if ((x - i < 0 || y - i < 0) || b.board[x - i][y - i] != 0) {
-                    break;
-                }
-                for (int j = 1; j < 8; j++) {
-                    if (moves[j][0] == -1) {
-                        moves[j][0] = x - i;
-                        moves[j][1] = y - i;
-                        break;
-                    }
-                }
-            }
-
-            for (int i = 1; i < 8; i++) {
-                if ((x + i > 7 || y - i < 0) || b.board[x + i][y - i] != 0) {
-                    break;
-                }
-                for (int j = 1; j < 8; j++) {
-                    if (moves[j][0] == -1) {
-                        moves[j][0] = x + i;
-                        moves[j][1] = y - i;
-                        break;
-                    }
-                }
-            }
-            return moves;
-            */
-        }
 
         public void move(int x1, int y1) {
             Log.d("f", "move draught");
@@ -371,10 +399,11 @@ public class BotActivity extends AppCompatActivity implements View.OnClickListen
             int king;
             king = turn == 1 ? 11 : 22; // Указание кодировки дамки, в которую может превратиться шашка, в зависимости от цвета.
             int pos_king;
-            pos_king = turn == 1 ? 7 : 0; // Указание гоиризонатли, на которой шашка станет дамкой.
+            pos_king = turn == 1 ? 7 : 0; // Указание гоиризонатли, на которой шашка станет дамкой.*/
             b.board[x][y] = 0;
             x = x1;
             y = y1;
+
             if (x1 == pos_king) {
                 b.board[x1][y1] = king;
                 is_king = true;
@@ -387,36 +416,182 @@ public class BotActivity extends AppCompatActivity implements View.OnClickListen
             b.updateboard();
         }
 
-        public boolean canFight () {
-            int k;
-            k = turn == 1 ? 22 : 11;
-            int opponent;
-            opponent = turn == 1 ? 2 : 1;
-            boolean can_fight = false;
+        public int[][] vMove(int x1, int y1, int[][] board) {
+            Log.d("f", "vMove draught");
+            int dr;
+            if (turn == 1) {
+                dr = is_king ? 11 : 1;
+            } else {
+                dr = is_king ? 22 : 2;
+            }
+            int king;
+            king = turn == 1 ? 11 : 22; // Указание кодировки дамки, в которую может превратиться шашка, в зависимости от цвета.
+            int pos_king;
+            pos_king = turn == 1 ? 7 : 0; // Указание гоиризонатли, на которой шашка станет дамкой.*/
+            board[x][y] = 0;
+            x = x1;
+            y = y1;
+
+            if (x1 == pos_king) {
+                board[x1][y1] = king;
+                is_king = true;
+            } else {
+                board[x1][y1] = dr;
+            }
+            // Смена хода.
+            //turn = turn == 1 ? 2 : 1;
+            id = 0;
+            return board;
+        }
+
+        public boolean canMove () {
+            int d;
+            d = turn == 1 ? 1 : -1;
+            boolean can_move = false;
             if (!is_king) {
-                can_fight = ((x + 2 <= 7 && y + 2 <= 7) && (b.board[x + 1][y + 1] == opponent || b.board[x + 1][y + 1] == k) && (b.board[x + 2][y + 2] == 0 || b.board[x + 2][y + 2] == 3));
-                if ((x - 2 >= 0 && y + 2 <= 7) && (b.board[x - 1][y + 1] == opponent || b.board[x - 1][y + 1] == k) && (b.board[x - 2][y + 2] == 0 || b.board[x - 2][y + 2] == 3)) {
-                    can_fight = true;
+                if (x != -100 && y != -100 && y + 1 < 8 && (x + d < 8 && x + d > -1)) {
+                    if (b.board[x + d][y + 1] == 0 || b.board[x + d][y + 1] == 3) {
+                        can_move = true;
+                    }
                 }
-                if ((x - 2 >= 0 && y - 2 >= 0) && (b.board[x - 1][y - 1] == opponent || b.board[x - 1][y - 1] == k) && (b.board[x - 2][y - 2] == 0 || b.board[x - 2][y - 2] == 3)) {
-                    can_fight = true;
-                }
-                if ((x + 2 <= 7 && y - 2 >= 0) && (b.board[x + 1][y - 1] == opponent || b.board[x + 1][y - 1] == k) && (b.board[x + 2][y - 2] == 0 || b.board[x + 2][y - 2] == 3)) {
-                    can_fight = true;
+                if (x != -100 && y != -100 && y - 1 > -1 && (x + d < 8 && x + d > -1)) {
+                    if (b.board[x + d][y - 1] == 0 || b.board[x + d][y - 1] == 3) {
+                        can_move = true;
+                    }
                 }
             } else {
-                for (int i = 1; i < 8; i++) {
-                    if ((x + i + 1 <= 7 && y + i + 1 <= 7) && (b.board[x + i][y + i] == opponent || b.board[x + i][y + i] == k) && (b.board[x + i + 1][y + i + 1] == 0 || b.board[x + i + 1][y + i + 1] == 3)) {
+                if (x != -100 && y != -100 && y + 1 < 8 && x + 1 < 8) {
+                    if (b.board[x + 1][y + 1] == 0 || b.board[x + 1][y + 1] == 3) {
+                        can_move = true;
+                    }
+                }
+                if (x != -100 && y != -100 && y - 1 > -1 && x + 1 < 8) {
+                    if (b.board[x + 1][y - 1] == 0 || b.board[x + 1][y - 1] == 3) {
+                        can_move = true;
+                    }
+                }
+                if (x != -100 && y != -100 && y - 1 > -1 && x - 1 > -1) {
+                    if (b.board[x - d][y - 1] == 0 || b.board[x - d][y - 1] == 3) {
+                        can_move = true;
+                    }
+                }
+                if (x != -100 && y != -100 && y + 1 < 8 && x - 1 > -1) {
+                    if (b.board[x - d][y + 1] == 0 || b.board[x - d][y + 1] == 3) {
+                        can_move = true;
+                    }
+                }
+            }
+            return can_move;
+        }
+
+        public boolean canFight () {
+            int k = 0;
+            int opponent = 10;
+            int teammate = 10;
+            int kt = 10;
+            boolean can_fight = false;
+            if (!is_king) {
+                if (x != -100 && y != -100) {
+                    if (b.board[x][y] == 1 || b.board[x][y] == 11) {
+                        opponent = 2;
+                        k = 22;
+                    } else if (b.board[x][y] == 2 || b.board[x][y] == 22) {
+                        opponent = 1;
+                        k = 11;
+                    }
+                    if ((x + 2 <= 7 && y + 2 <= 7) && (b.board[x + 1][y + 1] == opponent || b.board[x + 1][y + 1] == k) && b.board[x + 1][y + 1] != 10 && (b.board[x + 2][y + 2] == 0 || b.board[x + 2][y + 2] == 3)) {
                         can_fight = true;
                     }
-                    if ((x - i - 1 >= 0 && y + i + 1 <= 7) && (b.board[x - i][y + i] == opponent || b.board[x - i][y + i] == k) && (b.board[x - i - 1][y + i + 1] == 0 || b.board[x - i - 1][y + i + 1] == 3)) {
+                    if ((x - 2 >= 0 && y + 2 <= 7) && (b.board[x - 1][y + 1] == opponent || b.board[x - 1][y + 1] == k) && b.board[x - 1][y + 1] != 10 && (b.board[x - 2][y + 2] == 0 || b.board[x - 2][y + 2] == 3)) {
                         can_fight = true;
                     }
-                    if ((x - i - 1 >= 0 && y - i - 1 >= 0) && (b.board[x - i][y - i] == opponent || b.board[x - i][y - i] == k) && (b.board[x - i - 1][y - i - 1] == 0 || b.board[x - i - 1][y - i - 1] == 3)) {
+                    if ((x - 2 >= 0 && y - 2 >= 0) && (b.board[x - 1][y - 1] == opponent || b.board[x - 1][y - 1] == k) && b.board[x - 1][y - 1] != 10 && (b.board[x - 2][y - 2] == 0 || b.board[x - 2][y - 2] == 3)) {
                         can_fight = true;
                     }
-                    if ((x + i + 1 <= 7 && y - i - 1 >= 0) && (b.board[x + i][y - i] == opponent || b.board[x + i][y - i] == k) && (b.board[x + i + 1][y - i - 1] == 0 || b.board[x + i + 1][y - i - 1] == 3)) {
+                    if ((x + 2 <= 7 && y - 2 >= 0) && (b.board[x + 1][y - 1] == opponent || b.board[x + 1][y - 1] == k) && b.board[x + 1][y - 1] != 10 && (b.board[x + 2][y - 2] == 0 || b.board[x + 2][y - 2] == 3)) {
                         can_fight = true;
+                    }
+                }
+            } else {
+                if (x != -100 && y != -100) {
+                    if (b.board[x][y] == 1 || b.board[x][y] == 11) {
+                        teammate = 1;
+                        kt = 11;
+                        opponent = 2;
+                        k = 22;
+                    } else if (b.board[x][y] == 2 || b.board[x][y] == 22) {
+                        teammate = 2;
+                        kt = 22;
+                        opponent = 1;
+                        k = 11;
+                    }
+                    for (int i = 1; i < 8; i++) {
+                        if (x + i + 1 <= 7 && y + i + 1 <= 7) {
+                            if ((b.board[x + i + 1][y + i + 1] == opponent || b.board[x + i + 1][y + i + 1] == k || b.board[x + i + 1][y + i + 1] == kt || b.board[x + i + 1][y + i + 1] == teammate) && (b.board[x + i][y + i] == opponent || b.board[x + i][y + i] == k || b.board[x + i][y + i] == kt || b.board[x + i][y + i] == teammate)) {
+                                Log.d("f", "aaaaaaa");
+                                break;
+                            }
+                        }
+                        if (x + i <= 7 && y + i <= 7) {
+                            if (b.board[x + i][y + i] == 10) {
+                                break;
+                            }
+                        }
+                        if ((x + i + 1 <= 7 && y + i + 1 <= 7) && (b.board[x + i][y + i] == opponent || b.board[x + i][y + i] == k) && (b.board[x + i + 1][y + i + 1] == 0 || b.board[x + i + 1][y + i + 1] == 3)) {
+                            can_fight = true;
+                            break;
+                        }
+                    }
+
+                    for (int i = 1; i < 8; i++) {
+                        if (x - i >= 0 && y + i <= 7) {
+                            if (b.board[x - i][y + i] == 10) {
+                                Log.d("f", "aaaaaaab");
+                                break;
+                            }
+                        }
+                        if (x - i - 1 >= 0 && y + i + 1 <= 7) {
+                            if ((b.board[x - i - 1][y + i + 1] == opponent || b.board[x - i - 1][y + i + 1] == k || b.board[x - i - 1][y + i + 1] == kt || b.board[x - i - 1][y + i + 1] == teammate) && (b.board[x - i][y + i] == opponent || b.board[x - i][y + i] == k || b.board[x - i][y + i] == kt || b.board[x - i][y + i] == teammate)) {
+                                break;
+                            }
+                        }
+                        if ((x - i - 1 >= 0 && y + i + 1 <= 7) && (b.board[x - i][y + i] == opponent || b.board[x - i][y + i] == k) && (b.board[x - i - 1][y + i + 1] == 0 || b.board[x - i - 1][y + i + 1] == 3)) {
+                            can_fight = true;
+                            break;
+                        }
+                    }
+                    for (int i = 1; i < 8; i++) {
+                        if (x - i >= 0 && y - i >= 0) {
+                            if (b.board[x - i][y - i] == 10) {
+                                break;
+                            }
+                        }
+                        if (x - i - 1 >= 0 && y - i - 1 >= 0) {
+                            if ((b.board[x - i - 1][y - i - 1] == opponent || b.board[x - i - 1][y - i - 1] == k || b.board[x - i - 1][y - i - 1] == kt || b.board[x - i - 1][y - i - 1] == teammate) && (b.board[x - i][y - i] == opponent || b.board[x - i][y - i] == k || b.board[x - i][y - i] == kt || b.board[x - i][y - i] == teammate)) {
+                                Log.d("f", "aaaaaaabbbbbbbb");
+                                break;
+                            }
+                        }
+                        if ((x - i - 1 >= 0 && y - i - 1 >= 0) && (b.board[x - i][y - i] == opponent || b.board[x - i][y - i] == k) && (b.board[x - i - 1][y - i - 1] == 0 || b.board[x - i - 1][y - i - 1] == 3)) {
+                            can_fight = true;
+                            break;
+                        }
+                    }
+                    for (int i = 1; i < 8; i++) {
+                        if (x + i <= 7 && y - i >= 0) {
+                            if (b.board[x + i][y - i] == 10) {
+                                break;
+                            }
+                        }
+                        if (x + i + 1 <= 7 && y - i - 1 >= 0) {
+                            if ((b.board[x + i + 1][y - i - 1] == opponent || b.board[x + i + 1][y - i - 1] == k || b.board[x + i + 1][y - i - 1] == kt || b.board[x + i + 1][y - i - 1] == teammate) && (b.board[x + i][y - i] == opponent || b.board[x + i][y - i] == k || b.board[x + i][y - i] == kt || b.board[x + i][y - i] == teammate)) {
+                                break;
+                            }
+                        }
+                        if ((x + i + 1 <= 7 && y - i - 1 >= 0) && (b.board[x + i][y - i] == opponent || b.board[x + i][y - i] == k) && (b.board[x + i + 1][y - i - 1] == 0 || b.board[x + i + 1][y - i - 1] == 3)) {
+                            can_fight = true;
+                            break;
+                        }
                     }
                 }
             }
@@ -426,64 +601,92 @@ public class BotActivity extends AppCompatActivity implements View.OnClickListen
         public int[][] getPossibleFights() {
             Log.d("f", "getPossibleFights draught");
             int k;
+            int teammate = 0;
+            int kt = 0;
             k = turn == 1 ? 22 : 11;
             int opponent;
             opponent = turn == 1 ? 2 : 1;
-            int[][] fights = new int[0][2];
-            int[] el = new int[2];
-            if (!is_king) {
-                if ((x + 2 <= 7 && y + 2 <= 7) && (b.board[x + 1][y + 1] == opponent || b.board[x + 1][y + 1] == k) && b.board[x + 2][y + 2] == 0) {
-                    el[0] = x + 2;
-                    el[1] = y + 2;
-                    fights = addElement(fights, el);
-                }
-                if ((x - 2 >= 0 && y + 2 <= 7) && (b.board[x - 1][y + 1] == opponent || b.board[x - 1][y + 1] == k) && b.board[x - 2][y + 2] == 0) {
-                    el[0] = x - 2;
-                    el[1] = y + 2;
-                    fights = addElement(fights, el);
-                }
-                if ((x - 2 >= 0 && y - 2 >= 0) && (b.board[x - 1][y - 1] == opponent || b.board[x - 1][y - 1] == k) && b.board[x - 2][y - 2] == 0) {
-                    el[0] = x - 2;
-                    el[1] = y - 2;
-                    fights = addElement(fights, el);
-                }
-                if ((x + 2 <= 7 && y - 2 >= 0) && (b.board[x + 1][y - 1] == opponent || b.board[x + 1][y - 1] == k) && b.board[x + 2][y - 2] == 0) {
-                    el[0] = x + 2;
-                    el[1] = y - 2;
-                    fights = addElement(fights, el);
-                }
-            } else {
-                for (int i = 1; i < 8; i++) {
-                    if ((x + i + 1 <= 7 && y + i + 1 <= 7) && (b.board[x + i][y + i] == opponent || b.board[x + i][y + i] == k) && (b.board[x + i + 1][y + i + 1] == 0 || b.board[x + i + 1][y + i + 1] == 3)) {
-                        el[0] = x + i;
-                        el[1] = y + i;
-                        fights = addElement(fights, el);
+            if (b.board[x][y] == 1 || b.board[x][y] == 11) {
+                teammate = 1;
+                kt = 11;
+                opponent = 2;
+                k = 22;
+            } else if (b.board[x][y] == 2 || b.board[x][y] == 22) {
+                teammate = 2;
+                kt = 22;
+                opponent = 1;
+                k = 11;
+            }
+            int[][] fights = {{-1, -1}, {-1, -1}, {-1, -1}, {-1, -1}};
+            for (int i = 1; i < 8; i++) {
+                if (x + i + 1 <= 7 && y + i + 1 <= 7) {
+                    if ((b.board[x + i + 1][y + i + 1] == opponent || b.board[x + i + 1][y + i + 1] == k || b.board[x + i + 1][y + i + 1] == kt || b.board[x + i + 1][y + i + 1] == teammate) && (b.board[x + i][y + i] == opponent || b.board[x + i][y + i] == k || b.board[x + i][y + i] == kt || b.board[x + i][y + i] == teammate)) {
+                        Log.d("f", "aaaaaaa");
                         break;
                     }
                 }
-                for (int i = 1; i < 8; i++) {
-                    if ((x - i - 1 >= 0 && y + i + 1 <= 7) && (b.board[x - i][y + i] == opponent || b.board[x - i][y + i] == k) && (b.board[x - i - 1][y + i + 1] == 0 || b.board[x - i - 1][y + i + 1] == 3)) {
-                        el[0] = x - i;
-                        el[1] = y + i;
-                        fights = addElement(fights, el);
+                if (x + i <= 7 && y + i <= 7) {
+                    if (b.board[x + i][y + i] == 10) {
                         break;
                     }
                 }
-                for (int i = 1; i < 8; i++) {
-                    if ((x - i - 1 >= 0 && y - i - 1 >= 0) && (b.board[x - i][y - i] == opponent || b.board[x - i][y - i] == k) && (b.board[x - i - 1][y - i - 1] == 0 || b.board[x - i - 1][y - i - 1] == 3)) {
-                        el[0] = x - i;
-                        el[1] = y - i;
-                        fights = addElement(fights, el);
+                if ((x + i + 1 <= 7 && y + i + 1 <= 7) && (b.board[x + i][y + i] == opponent || b.board[x + i][y + i] == k) && (b.board[x + i + 1][y + i + 1] == 0 || b.board[x + i + 1][y + i + 1] == 3)) {
+                    fights[0][0] = x + i;
+                    fights[0][1] = y + i;
+                    break;
+                }
+            }
+            for (int i = 1; i < 8; i++) {
+                if (x - i >= 0 && y + i <= 7) {
+                    if (b.board[x - i][y + i] == 10) {
+                        Log.d("f", "aaaaaaab");
                         break;
                     }
                 }
-                for (int i = 1; i < 8; i++) {
-                    if ((x + i + 1 <= 7 && y - i - 1 >= 0) && (b.board[x + i][y - i] == opponent || b.board[x + i][y - i] == k) && (b.board[x + i + 1][y - i - 1] == 0 || b.board[x + i + 1][y - i - 1] == 3)) {
-                        el[0] = x + i;
-                        el[1] = y - i;
-                        fights = addElement(fights, el);
+                if (x - i - 1 >= 0 && y + i + 1 <= 7) {
+                    if ((b.board[x - i - 1][y + i + 1] == opponent || b.board[x - i - 1][y + i + 1] == k || b.board[x - i - 1][y + i + 1] == kt || b.board[x - i - 1][y + i + 1] == teammate) && (b.board[x - i][y + i] == opponent || b.board[x - i][y + i] == k || b.board[x - i][y + i] == kt || b.board[x - i][y + i] == teammate)) {
                         break;
                     }
+                }
+                if ((x - i - 1 >= 0 && y + i + 1 <= 7) && (b.board[x - i][y + i] == opponent || b.board[x - i][y + i] == k) && (b.board[x - i - 1][y + i + 1] == 0 || b.board[x - i - 1][y + i + 1] == 3)) {
+                    fights[1][0] = x - i;
+                    fights[1][1] = y + i;
+                    break;
+                }
+            }
+            for (int i = 1; i < 8; i++) {
+                if (x - i >= 0 && y - i >= 0) {
+                    if (b.board[x - i][y - i] == 10) {
+                        break;
+                    }
+                }
+                if (x - i - 1 >= 0 && y - i - 1 >= 0) {
+                    if ((b.board[x - i - 1][y - i - 1] == opponent || b.board[x - i - 1][y - i - 1] == k || b.board[x - i - 1][y - i - 1] == kt || b.board[x - i - 1][y - i - 1] == teammate) && (b.board[x - i][y - i] == opponent || b.board[x - i][y - i] == k || b.board[x - i][y - i] == kt || b.board[x - i][y - i] == teammate)) {
+                        Log.d("f", "aaaaaaabbbbbbbb");
+                        break;
+                    }
+                }
+                if ((x - i - 1 >= 0 && y - i - 1 >= 0) && (b.board[x - i][y - i] == opponent || b.board[x - i][y - i] == k) && (b.board[x - i - 1][y - i - 1] == 0 || b.board[x - i - 1][y - i - 1] == 3)) {
+                    fights[2][0] = x - i;
+                    fights[2][1] = y - i;
+                    break;
+                }
+            }
+            for (int i = 1; i < 8; i++) {
+                if (x + i <= 7 && y - i >= 0) {
+                    if (b.board[x + i][y - i] == 10) {
+                        break;
+                    }
+                }
+                if (x + i + 1 <= 7 && y - i - 1 >= 0) {
+                    if ((b.board[x + i + 1][y - i - 1] == opponent || b.board[x + i + 1][y - i - 1] == k || b.board[x + i + 1][y - i - 1] == kt || b.board[x + i + 1][y - i - 1] == teammate) && (b.board[x + i][y - i] == opponent || b.board[x + i][y - i] == k || b.board[x + i][y - i] == kt || b.board[x + i][y - i] == teammate)) {
+                        break;
+                    }
+                }
+                if ((x + i + 1 <= 7 && y - i - 1 >= 0) && (b.board[x + i][y - i] == opponent || b.board[x + i][y - i] == k) && (b.board[x + i + 1][y - i - 1] == 0 || b.board[x + i + 1][y - i - 1] == 3)) {
+                    fights[3][0] = x + i;
+                    fights[3][1] = y - i;
+                    break;
                 }
             }
             return fights;
@@ -502,38 +705,38 @@ public class BotActivity extends AppCompatActivity implements View.OnClickListen
             pos_king = turn == 1 ? 7 : 0; // Указание гоиризонатли, на которой шашка станет дамкой.
             b.board[x][y] = 0;
             if (x1 > x && y1 > y) {
-                b.board[x + 1][y + 1] = 0;
+                b.board[x + 1][y + 1] = 10;
                 for (int i = 0; i < 12; i++) {
                     if (opponent[i].x == x + 1 && opponent[i].y == y + 1) {
-                        opponent[i].x = -1;
-                        opponent[i].y = -1;
+                        opponent[i].x = -100;
+                        opponent[i].y = -100;
                     }
                 }
             }
             if (x1 < x && y1 > y) {
-                b.board[x - 1][y + 1] = 0;
+                b.board[x - 1][y + 1] = 10;
                 for (int i = 0; i < 12; i++) {
                     if (opponent[i].x == x - 1 && opponent[i].y == y + 1) {
-                        opponent[i].x = -1;
-                        opponent[i].y = -1;
+                        opponent[i].x = -100;
+                        opponent[i].y = -100;
                     }
                 }
             }
             if (x1 < x && y1 < y) {
-                b.board[x - 1][y - 1] = 0;
+                b.board[x - 1][y - 1] = 10;
                 for (int i = 0; i < 12; i++) {
                     if (opponent[i].x == x - 1 && opponent[i].y == y - 1) {
-                        opponent[i].x = -1;
-                        opponent[i].y = -1;
+                        opponent[i].x = -100;
+                        opponent[i].y = -100;
                     }
                 }
             }
             if (x1 > x && y1 < y) {
-                b.board[x + 1][y - 1] = 0;
+                b.board[x + 1][y - 1] = 10;
                 for (int i = 0; i < 12; i++) {
                     if (opponent[i].x == x + 1 && opponent[i].y == y - 1) {
-                        opponent[i].x = -1;
-                        opponent[i].y = -1;
+                        opponent[i].x = -100;
+                        opponent[i].y = -100;
                     }
                 }
             }
@@ -551,56 +754,72 @@ public class BotActivity extends AppCompatActivity implements View.OnClickListen
                 id_further = 0;
                 turn = turn == 1 ? 2 : 1;
                 id = 0;
+                clear3();
+                clear10();
                 b.updateboard();
             }
         }
 
         public void kingFight(int x1, int y1, Draught[] opponent) {
+            for (int[] i : b.board) {
+                s = Arrays.toString(i);
+                Log.d("f", s);
+            }
             int dr = turn == 1 ? 11 : 22;
-            if (x1 > x && y1 > y) {
+            int[][] fights = getPossibleFights();
+            if (fights[0][0] > x && fights[0][1] > y && fights[0][0] != -1) {
+                b.board[fights[0][0]][fights[0][1]] = 10;
                 for (int j = 0; j < 12; j++) {
-                    if(opponent[j].x > x && opponent[j].x < x1 && opponent[j].y > y && opponent[j].y < y1) {
-                        b.board[opponent[j].x][opponent[j].y] = 0;
-                        opponent[j].x = -1;
-                        opponent[j].y = -1;
+                    if(opponent[j].x == fights[0][0] && opponent[j].y == fights[0][1]){
+                        opponent[j].x = -100;
+                        opponent[j].y = -100;
+                    }
+                }
+            } else if (fights[1][0] < x && fights[1][1] > y && fights[1][0] != -1) {
+                b.board[fights[1][0]][fights[1][1]] = 10;
+                for (int j = 0; j < 12; j++) {
+                    if(opponent[j].x == fights[1][0] && opponent[j].y == fights[1][1]){
+                        opponent[j].x = -100;
+                        opponent[j].y = -100;
+                    }
+                }
+            } else if (fights[2][0] < x && fights[2][1] < y && fights[2][0] != -1) {
+                b.board[fights[2][0]][fights[2][1]] = 10;
+                for (int j = 0; j < 12; j++) {
+                    if(opponent[j].x == fights[2][0] && opponent[j].y == fights[2][1]){
+                        opponent[j].x = -100;
+                        opponent[j].y = -100;
+                    }
+                }
+            } else if (fights[3][0] > x && fights[3][0] < y && fights[3][0] != -1) {
+                b.board[fights[3][0]][fights[3][1]] = 10;
+                for (int j = 0; j < 12; j++) {
+                    if(opponent[j].x == fights[3][0] && opponent[j].y == fights[3][1]) {
+                        opponent[j].x = -100;
+                        opponent[j].y = -100;
                     }
                 }
             }
-            if (x1 < x && y1 > y) {
-                for (int j = 0; j < 12; j++) {
-                    if(opponent[j].x < x && opponent[j].x > x1 && opponent[j].y > y && opponent[j].y < y1) {
-                        b.board[opponent[j].x][opponent[j].y] = 0;
-                        opponent[j].x = -1;
-                        opponent[j].y = -1;
-                    }
-                }
-            }
-            if (x1 < x && y1 < y) {
-                for (int j = 0; j < 12; j++) {
-                    if(opponent[j].x < x && opponent[j].x > x1 && opponent[j].y < y && opponent[j].y > y1) {
-                        b.board[opponent[j].x][opponent[j].y] = 0;
-                        opponent[j].x = -1;
-                        opponent[j].y = -1;
-                    }
-                }
-            }
-            if (x1 > x && y1 < y) {
-                for (int j = 0; j < 12; j++) {
-                    if(opponent[j].x > x && opponent[j].x < x1 && opponent[j].y < y && opponent[j].y > y1) {
-                        b.board[opponent[j].x][opponent[j].y] = 0;
-                        opponent[j].x = -1;
-                        opponent[j].y = -1;
-                    }
-                }
+            for (int[] i : b.board) {
+                s = Arrays.toString(i);
+                Log.d("f", s);
             }
             b.board[x][y] = 0;
+            x = x1;
+            y = y1;
             b.board[x1][y1] = dr;
+            for (int[] i : b.board) {
+                s = Arrays.toString(i);
+                Log.d("f", s);
+            }
             if (canFight()) {
                 id_further = id_draught;
             } else {
                 id_further = 0;
                 turn = turn == 1 ? 2 : 1;
                 id = 0;
+                clear3();
+                clear10();
                 b.updateboard();
             }
         }
@@ -679,6 +898,16 @@ public class BotActivity extends AppCompatActivity implements View.OnClickListen
         b.boardIm[7][6] = findViewById(R.id.check87);
         b.boardIm[7][7] = findViewById(R.id.check88);
 
+        Button back = findViewById(R.id.back);
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(BotActivity.this, MenuActivity.class);
+                startActivity(intent);
+            }
+        });
+
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 b.boardIm[i][j].setOnClickListener(this);
@@ -732,7 +961,7 @@ public class BotActivity extends AppCompatActivity implements View.OnClickListen
                         if (b.anyFight(white)) {
                             Log.d("f", "setFights onClick white");
                             b.setFights(i, j, white);
-                        } else {
+                        } else if (b.anyMove(white)) {
                             Log.d("f", "setMoves onClick white");
                             b.setMoves(i, j, white);
                         }
@@ -740,7 +969,7 @@ public class BotActivity extends AppCompatActivity implements View.OnClickListen
                         if (b.anyFight(black)) {
                             Log.d("f", "setFights onClick black");
                             b.setFights(i, j, black);
-                        } else {
+                        } else if (b.anyMove(black)) {
                             Log.d("f", "setMoves onClick black");
                             b.setMoves(i, j, black);
                         }
@@ -750,7 +979,7 @@ public class BotActivity extends AppCompatActivity implements View.OnClickListen
                         if (b.anyFight(white)) {
                             Log.d("f", "fight onClick white");
                             b.fight(i, j, white);
-                        } else {
+                        } else if (b.anyMove(white)) {
                             Log.d("f", "move onClick white");
                             b.move(i, j, white);
                         }
@@ -758,7 +987,7 @@ public class BotActivity extends AppCompatActivity implements View.OnClickListen
                         if (b.anyFight(black)) {
                             Log.d("f", "fight onClick black");
                             b.fight(i, j, black);
-                        } else {
+                        } else if (b.anyMove(black)) {
                             Log.d("f", "move onClick black");
                             b.move(i, j, black);
                         }
@@ -767,6 +996,7 @@ public class BotActivity extends AppCompatActivity implements View.OnClickListen
             }
         }
         result();
+        virtualOnClick(black);
     }
 
     public void result () {
@@ -787,7 +1017,76 @@ public class BotActivity extends AppCompatActivity implements View.OnClickListen
         } else if (bl == 0) {
             Toast toast = Toast.makeText(getApplicationContext(), "Белые выиграли!!!", Toast.LENGTH_LONG);
             toast.show();
+        } else if (!b.anyFight(white) && !b.anyMove(white) && turn == 1) {
+            Toast toast = Toast.makeText(getApplicationContext(), "Чёрные выиграли!!!", Toast.LENGTH_LONG);
+            toast.show();
+        } else if (!b.anyFight(black) && !b.anyMove(black) && turn == 2) {
+            Toast toast = Toast.makeText(getApplicationContext(), "Белые выиграли!!!", Toast.LENGTH_LONG);
+            toast.show();
         }
+
+    }
+
+    public void virtualOnClick(Draught[] dr) {
+        Draught[] white1 = white;
+        Draught[] black1 = black;
+        int[][] board = b.board;
+        for (int i = 0; i < 12; i++) {
+            if (dr[i].canMove() && turn == 2) {
+                b.vSetMoves(dr[i].x, dr[i].y, black1, board);
+                b.board = b.vBoard;
+                b.updateboard();
+            }
+        }
+    }
+
+    public double calculateScore (int[][] board) {
+        double score = 0;
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                if (i == 3 && (j == 3 || j == 5) && board[i][j] == 1) {
+                    score += 0.1;
+                }
+                if (i == 4 && board[i][j] == 1) {
+                    score += 0.2;
+                }
+                if (i == 5 && board[i][j] == 1) {
+                    score += 0.4;
+                }
+                if (i == 6 && board[i][j] == 1) {
+                    score += 0.5;
+                }
+                if (board[i][j] == 1) {
+                    score += 1;
+                }
+                if (board[i][j] == 11) {
+                    score += 2;
+                }
+            }
+        }
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                if (i == 4 && (j == 2 || j == 4) && board[i][j] == 2) {
+                    score -= 0.1;
+                }
+                if (i == 3 && board[i][j] == 2) {
+                    score -= 0.2;
+                }
+                if (i == 2 && board[i][j] == 2) {
+                    score -= 0.4;
+                }
+                if (i == 1 && board[i][j] == 2) {
+                    score -= 0.5;
+                }
+                if (board[i][j] == 2) {
+                    score -= 1;
+                }
+                if (board[i][j] == 22) {
+                    score -= 2;
+                }
+            }
+        }
+        return score;
     }
 
     // Очистка доски от кнопок с выбором.
@@ -802,18 +1101,22 @@ public class BotActivity extends AppCompatActivity implements View.OnClickListen
         b.updateboard();
     }
 
+    public void clear10 () {
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                if (b.board[i][j] == 10) {
+                    b.board[i][j] = 0;
+                }
+            }
+        }
+        b.updateboard();
+    }
+
     // Добавление в массив элемента.
     private static int[][] addElement (int[][] myArray, int[] element){
         int[][] array = Arrays.copyOf(myArray, myArray.length + 1);
         array[myArray.length] = element;
         return array;
     }
-
-    public static int[][] join(int[][] a, int[][] b) {
-        int[][] result = Arrays.copyOf(a, a.length + b.length);
-        System.arraycopy(b, 0, result, a.length, b.length);
-        return result;
-    }
-
 
 }
