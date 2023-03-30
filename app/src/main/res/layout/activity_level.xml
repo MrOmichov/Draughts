@@ -6,6 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".LevelActivity">
 
+    <Button
+        android:id="@+id/back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="16dp"
+        android:background="@android:color/holo_red_dark"
+        android:onClick="back"
+        android:text="Назад"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ImageView
         android:id="@+id/draughts_board"
         android:layout_width="385dp"

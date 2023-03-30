@@ -22,6 +22,14 @@ public class ExActivity extends AppCompatActivity {
         Button btn3 = findViewById(R.id.btn3);
         Button btn4 = findViewById(R.id.btn4);
         Button btn5 = findViewById(R.id.btn5);
+        Button back = findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ExActivity.this, MenuActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     public void StartLevel(View v) {

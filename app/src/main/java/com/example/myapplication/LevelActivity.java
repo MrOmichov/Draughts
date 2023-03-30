@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 import java.util.Arrays;
@@ -878,6 +879,16 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
         b.boardIm[7][5] = findViewById(R.id.check86);
         b.boardIm[7][6] = findViewById(R.id.check87);
         b.boardIm[7][7] = findViewById(R.id.check88);
+
+        Button back = findViewById(R.id.back);
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LevelActivity.this, MenuActivity.class);
+                startActivity(intent);
+            }
+        });
 
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
