@@ -13,6 +13,7 @@
         android:layout_marginStart="13dp"
         android:layout_marginTop="16dp"
         android:background="@android:color/holo_red_dark"
+        android:fontFamily="@font/montserrat_alternates_bold"
         android:text="Назад"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -21,86 +22,157 @@
         android:id="@+id/linearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="275dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="100dp"
+        android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/back">
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn1"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="20dp"
-            android:background="@android:color/holo_red_dark"
-            android:fontFamily="@font/montserrat_alternates_bold"
-            android:onClick="StartLevel"
-            android:text="1"
-            android:textColor="#FFFFFF"
-            android:textSize="18sp" />
+            android:orientation="horizontal">
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="0dp"
-            android:layout_marginEnd="20dp"
-            android:background="@android:color/holo_red_dark"
-            android:fontFamily="@font/montserrat_alternates_bold"
-            android:onClick="StartLevel"
-            android:text="2"
-            android:textColor="#FFFFFF"
-            android:textSize="18sp" />
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:background="@android:color/holo_red_dark"
+                android:fontFamily="@font/montserrat_alternates_bold"
+                android:onClick="StartLevel"
+                android:text="1"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn3"
+            <TextView
+                android:id="@+id/textView13"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/montserrat_alternates_bold"
+                android:text="Перемещение обычной шашки"
+                android:textAlignment="center"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="0dp"
-            android:layout_marginEnd="0dp"
-            android:background="@android:color/holo_red_dark"
-            android:fontFamily="@font/montserrat_alternates_bold"
-            android:onClick="StartLevel"
-            android:text="3"
-            android:textColor="#FFFFFF"
-            android:textSize="18sp" />
-    </LinearLayout>
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:background="@android:color/holo_red_dark"
+                android:fontFamily="@font/montserrat_alternates_bold"
+                android:onClick="StartLevel"
+                android:text="2"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="0dp"
-            android:layout_marginEnd="20dp"
-            android:layout_weight="1"
-            android:background="@android:color/holo_red_dark"
-            android:fontFamily="@font/montserrat_alternates_bold"
-            android:onClick="StartLevel"
-            android:text="4"
-            android:textColor="#FFFFFF"
-            android:textSize="18sp" />
+            <TextView
+                android:id="@+id/textView14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/montserrat_alternates_bold"
+                android:text="Перемещение дамки"
+                android:textAlignment="center"
+                android:textSize="18sp" />
+        </LinearLayout>
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="0dp"
-            android:layout_weight="1"
-            android:background="@android:color/holo_red_dark"
-            android:fontFamily="@font/montserrat_alternates_bold"
-            android:onClick="StartLevel"
-            android:text="5"
-            android:textColor="#FFFFFF"
-            android:textSize="18sp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:background="@android:color/holo_red_dark"
+                android:fontFamily="@font/montserrat_alternates_bold"
+                android:onClick="StartLevel"
+                android:text="3"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/textView15"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/montserrat_alternates_bold"
+                android:text="Взятие обычной шашкой"
+                android:textAlignment="center"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:background="@android:color/holo_red_dark"
+                android:fontFamily="@font/montserrat_alternates_bold"
+                android:onClick="StartLevel"
+                android:text="4"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/textView16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/montserrat_alternates_bold"
+                android:text="Взятие дамкой"
+                android:textAlignment="center"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:background="@android:color/holo_red_dark"
+                android:fontFamily="@font/montserrat_alternates_bold"
+                android:onClick="StartLevel"
+                android:text="5"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/textView17"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/montserrat_alternates_bold"
+                android:text="Небольшая комбинация"
+                android:textAlignment="center"
+                android:textSize="18sp" />
+        </LinearLayout>
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

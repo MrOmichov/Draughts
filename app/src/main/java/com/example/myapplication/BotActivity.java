@@ -40,17 +40,8 @@ public class BotActivity extends AppCompatActivity implements View.OnClickListen
                          {0, 0, 0, 0, 0, 0, 0, 0},
                          {0, 0, 0, 0, 0, 0, 0, 0},
                          {0, 0, 0, 0, 0, 0, 0, 0},
-                         {0, 0, 0, 0, 0, 0, 0, 0},
-                         {0, 0, 0, 0, 0, 0, 0, 2}}; // Виртуальное поле.
-
-        int[][] vBoard = {{0, 0, 0, 0, 0, 0, 0, 0},
-                        {0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0}};
+                         {0, 0, 2, 0, 0, 0, 0, 0},
+                         {0, 2, 0, 0, 0, 0, 0, 0}}; // Виртуальное поле.
 
         ImageButton[][] boardIm = new ImageButton[8][8];
 
@@ -106,58 +97,50 @@ public class BotActivity extends AppCompatActivity implements View.OnClickListen
             updateboard();
         }
 
-        public void vSetMoves(int x1, int y1, Draught[] dr, int[][] board) {
-            Log.d("f", "vSetMoves board");
-            int d;
-            d = turn == 1 ? 1 : -1;
-            for (int i = 0; i < 12; i++) {
-                if (dr[i].x == x1 && dr[i].y == y1) {
-                    for (int i1 = 0; i1 < 2; i1++) {
-                        if (!dr[i].is_king) {
-                            if (dr[i].getPossibleMoves()[i1] != -1) {
-                                id = dr[i].id_draught;
-                                if (calculateScore(dr[i].vMove(dr[i].x + d, dr[i].getPossibleMoves()[i1], board)) < score) {
-                                    Log.d("f", "vSetMoves");
-                                    score = calculateScore(board);
-                                    b.vBoard = board;
-                                }
-                            }
-                        } else {
-                            id = dr[i].id_draught;
-                            for (int i2 = 1; i2 < 8; i2++) {
-                                if ((dr[i].x + i2 > 7 || dr[i].y + i2 > 7) || board[dr[i].x + i2][dr[i].y + i2] != 0) {
-                                    break;
-                                }
-                                board[dr[i].x + i2][dr[i].y + i2] = 3;
-                            }
+        private void print(int[][] a) {
+            for (int i = 0; i < 8; i++) {
+                s = Arrays.toString(board[i]);
+                Log.d("f", s);
+            }
+            Log.d("f", "\n");
+        }
 
-                            for (int i2 = 1; i2 < 8; i2++) {
-                                if ((dr[i].x - i2 < 0 || dr[i].y + i2 > 7) || board[dr[i].x - i2][dr[i].y + i2] != 0) {
-                                    break;
-                                }
-                                board[dr[i].x - i2][dr[i].y + i2] = 3;
-
-                            }
-
-                            for (int i2 = 1; i2 < 8; i2++) {
-                                if ((dr[i].x - i2 < 0 || dr[i].y - i2 < 0) || board[dr[i].x - i2][dr[i].y - i2] != 0) {
-                                    break;
-                                }
-                                b.board[dr[i].x - i2][dr[i].y - i2] = 3;
-                            }
-
-                            for (int i2 = 1; i2 < 8; i2++) {
-                                if ((dr[i].x + i2 > 7 || dr[i].y - i2 < 0) || board[dr[i].x + i2][dr[i].y - i2] != 0) {
-                                    break;
-                                }
-                                b.board[dr[i].x + i2][dr[i].y - i2] = 3;
-                            }
-                        }
-                    }
-                    break;
+        public void vSetMoves(int x1, int y1, Draught[] dr) {
+            int[][] oldBoard = new int[8][8];
+            for (int i = 0; i < 8; i++) {
+                for (int j = 0; j < 8; j++) {
+                    oldBoard[i][j] = virB.board[i][j];
                 }
             }
-            updateboard();
+            int d;
+            d = turn == 1 ? 1 : -1;
+            if (dr[0].getPossibleMoves()[0] != -1) {
+                id = dr[0].id_draught;
+                virB.board[x1 + d][dr[0].getPossibleMoves()[0]] = 2;
+                virB.board[x1][y1] = 0;
+                if (calculateScore(virB.board) < score) {
+                    score = calculateScore(virB.board);
+                    b.board = virB.board;
+                    dr[0].x = dr[0].x + d;
+                    dr[0].y = dr[0].getPossibleMoves()[0];
+                }
+                virB.board = oldBoard;
+                Log.d("f", "oldBoard");
+                print(oldBoard);
+            }
+            if (dr[0].getPossibleMoves()[1] != -1) {
+                virB.board[x1 + d][dr[0].getPossibleMoves()[1]] = 2;
+                virB.board[x1][y1] = 0;
+                if (calculateScore(virB.board) < score) {
+                    score = calculateScore(virB.board);
+                    b.board = virB.board;
+                    dr[0].x = dr[0].x + d;
+                    dr[0].y = dr[0].getPossibleMoves()[1];
+                }
+                virB.board = oldBoard;
+                Log.d("f", "oldBoard");
+                print(oldBoard);
+            }
         }
 
         public void setFights(int x1, int y1, Draught[] dr) {
@@ -269,7 +252,6 @@ public class BotActivity extends AppCompatActivity implements View.OnClickListen
             clear3();
         }
 
-
         public void fight(int x1, int y1, Draught[] dr) {
             for (int i = 0; i < 12; i++) {
                 if (dr[i].id_draught == id) {
@@ -349,6 +331,9 @@ public class BotActivity extends AppCompatActivity implements View.OnClickListen
 
     Board b = new Board();
 
+    Board virB = new Board();
+
+
     public class Draught {
         int id_draught;
         boolean is_king;
@@ -367,13 +352,13 @@ public class BotActivity extends AppCompatActivity implements View.OnClickListen
             int el;
             int d;
             d = turn == 1 ? 1 : -1;
-            if (y + 1 <= 7 && b.board[x + d][y + 1] == 0) {
+            if (8 > x + d && x + d > -1 && y + 1 <= 7 && b.board[x + d][y + 1] == 0) {
                 el = y + 1;
             } else {
                 el = -1;
             }
             moves[0] = el;
-            if (y - 1 >= 0 && b.board[x + d][y - 1] == 0) {
+            if (8 > x + d && x + d > -1 && y - 1 >= 0 && b.board[x + d][y - 1] == 0) {
                 el = y - 1;
             } else {
                 el = -1;
@@ -381,12 +366,6 @@ public class BotActivity extends AppCompatActivity implements View.OnClickListen
             moves[1] = el;
             return moves;
         }
-
-        /*
-        public canMove () {
-
-        }*/
-
 
         public void move(int x1, int y1) {
             Log.d("f", "move draught");
@@ -414,34 +393,6 @@ public class BotActivity extends AppCompatActivity implements View.OnClickListen
             turn = turn == 1 ? 2 : 1;
             id = 0;
             b.updateboard();
-        }
-
-        public int[][] vMove(int x1, int y1, int[][] board) {
-            Log.d("f", "vMove draught");
-            int dr;
-            if (turn == 1) {
-                dr = is_king ? 11 : 1;
-            } else {
-                dr = is_king ? 22 : 2;
-            }
-            int king;
-            king = turn == 1 ? 11 : 22; // Указание кодировки дамки, в которую может превратиться шашка, в зависимости от цвета.
-            int pos_king;
-            pos_king = turn == 1 ? 7 : 0; // Указание гоиризонатли, на которой шашка станет дамкой.*/
-            board[x][y] = 0;
-            x = x1;
-            y = y1;
-
-            if (x1 == pos_king) {
-                board[x1][y1] = king;
-                is_king = true;
-            } else {
-                board[x1][y1] = dr;
-            }
-            // Смена хода.
-            //turn = turn == 1 ? 2 : 1;
-            id = 0;
-            return board;
         }
 
         public boolean canMove () {
@@ -1017,27 +968,29 @@ public class BotActivity extends AppCompatActivity implements View.OnClickListen
         } else if (bl == 0) {
             Toast toast = Toast.makeText(getApplicationContext(), "Белые выиграли!!!", Toast.LENGTH_LONG);
             toast.show();
-        } else if (!b.anyFight(white) && !b.anyMove(white) && turn == 1) {
+        } /*else if (!b.anyFight(white) && !b.anyMove(white) && turn == 1) {
             Toast toast = Toast.makeText(getApplicationContext(), "Чёрные выиграли!!!", Toast.LENGTH_LONG);
             toast.show();
-        } else if (!b.anyFight(black) && !b.anyMove(black) && turn == 2) {
+        } else if (!b.anyFight(black) && !b.anyMove(black)  && turn == 2) {
             Toast toast = Toast.makeText(getApplicationContext(), "Белые выиграли!!!", Toast.LENGTH_LONG);
             toast.show();
-        }
+        }*/
 
     }
 
     public void virtualOnClick(Draught[] dr) {
+        virB.board = b.board;
         Draught[] white1 = white;
         Draught[] black1 = black;
-        int[][] board = b.board;
         for (int i = 0; i < 12; i++) {
             if (dr[i].canMove() && turn == 2) {
-                b.vSetMoves(dr[i].x, dr[i].y, black1, board);
-                b.board = b.vBoard;
+                Log.d("f", "blyat");
+                virB.vSetMoves(dr[i].x, dr[i].y, black1);
                 b.updateboard();
+                turn = 1;
             }
         }
+        score = Double.MAX_VALUE;
     }
 
     public double calculateScore (int[][] board) {
@@ -1055,6 +1008,9 @@ public class BotActivity extends AppCompatActivity implements View.OnClickListen
                 }
                 if (i == 6 && board[i][j] == 1) {
                     score += 0.5;
+                }
+                if (i == 7 && board[i][j] == 1) {
+                    score += 0.6;
                 }
                 if (board[i][j] == 1) {
                     score += 1;
@@ -1077,6 +1033,9 @@ public class BotActivity extends AppCompatActivity implements View.OnClickListen
                 }
                 if (i == 1 && board[i][j] == 2) {
                     score -= 0.5;
+                }
+                if (i == 0 && board[i][j] == 2) {
+                    score -= 0.6;
                 }
                 if (board[i][j] == 2) {
                     score -= 1;

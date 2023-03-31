@@ -13,6 +13,7 @@
         android:layout_marginStart="13dp"
         android:layout_marginTop="16dp"
         android:background="@android:color/holo_red_dark"
+        android:fontFamily="@font/montserrat_alternates_bold"
         android:text="Назад"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
