@@ -1,1 +1,1 @@
-APK-файл в app/debug
+APK-файл для нуждающихся в app/debug
