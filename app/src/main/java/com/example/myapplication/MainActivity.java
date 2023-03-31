@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     int turn = 1; // Очередность хода.
 
     public class Board {
-        /*
+
         int[][] board = {{1, 0, 1, 0, 1, 0, 1, 0},
                          {0, 1, 0, 1, 0, 1, 0, 1},
                          {1, 0, 1, 0, 1, 0, 1, 0},
@@ -30,17 +30,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                          {0, 0, 0, 0, 0, 0, 0, 0},
                          {0, 2, 0, 2, 0, 2, 0, 2},
                          {2, 0, 2, 0, 2, 0, 2, 0},
-                         {0, 2, 0, 2, 0, 2, 0, 2}};*/
+                         {0, 2, 0, 2, 0, 2, 0, 2}};
 
 
-        int[][] board = {{0, 0, 1, 0, 0, 0, 0, 0},
+        /*int[][] board = {{0, 0, 1, 0, 0, 0, 0, 0},
                          {0, 0, 0, 2, 0, 0, 0, 0},
                          {0, 0, 0, 0, 0, 0, 0, 0},
                          {0, 0, 0, 2, 0, 2, 0, 0},
                          {0, 0, 0, 0, 0, 0, 0, 0},
                          {0, 0, 0, 0, 0, 0, 0, 0},
                          {0, 0, 0, 0, 0, 0, 0, 0},
-                         {0, 0, 0, 0, 0, 0, 0, 0}}; // Виртуальное поле.
+                         {0, 0, 0, 0, 0, 0, 0, 0}};*/ // Виртуальное поле.
 
 
         ImageButton[][] boardIm = new ImageButton[8][8];
