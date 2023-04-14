@@ -22,8 +22,8 @@
 
     <ImageView
         android:id="@+id/draughts_board"
-        android:layout_width="385sp"
-        android:layout_height="385sp"
+        android:layout_width="385dp"
+        android:layout_height="385dp"
         android:layout_marginTop="173dp"
         android:src="@drawable/draughts_board"
         app:layout_constraintEnd_toEndOf="parent"
@@ -843,5 +843,29 @@
                 android:src="@drawable/draught_white" />
         </LinearLayout>
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/taken2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:fontFamily="@font/montserrat_alternates_bold"
+        android:text="0"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/draughts_board"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/taken1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:fontFamily="@font/montserrat_alternates_bold"
+        android:text="0"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/draughts_board" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

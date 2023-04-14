@@ -1,11 +1,13 @@
 package com.example.myapplication;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -44,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
         ImageButton[][] boardIm = new ImageButton[8][8];
+
 
         public void setMoves(int x1, int y1, Draught[] dr) {
             Log.d("f", "setMoves board");
@@ -294,6 +297,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Board b = new Board();
 
     public class Draught {
+        TextView taken1 = (TextView) findViewById(R.id.taken1);
+        TextView taken2 = (TextView) findViewById(R.id.taken2);
         int id_draught;
         boolean is_king;
         int x = -100;
@@ -568,6 +573,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return fights;
         }
 
+        @SuppressLint("SetTextI18n")
         public void Fight(int x1, int y1, Draught[] opponent) {
             int dr;
             if (turn == 1) {
@@ -633,9 +639,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     clear3();
                     clear10();
                     b.updateboard();
+                    taken1.setText(Integer.toString(setTaken1()));
+                    taken2.setText(Integer.toString(setTaken2()));
                 }
         }
 
+        @SuppressLint("SetTextI18n")
         public void kingFight(int x1, int y1, Draught[] opponent) {
             for (int[] i : b.board) {
                 s = Arrays.toString(i);
@@ -697,6 +706,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 clear3();
                 clear10();
                 b.updateboard();
+                taken1.setText(Integer.toString(setTaken1()));
+                taken2.setText(Integer.toString(setTaken2()));
             }
         }
     }
@@ -918,6 +929,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
         b.updateboard();
+    }
+
+    public int setTaken1 () {
+        int taken = 0;
+        for (Draught i : black) {
+            if (i.x == -100) {
+                taken += 1;
+            }
+        }
+        return taken;
+    }
+
+    public int setTaken2 () {
+        int taken = 0;
+        for (Draught i : white) {
+            if (i.x == -100) {
+                taken += 1;
+            }
+        }
+        return taken;
     }
 
         // Добавление в массив элемента.
